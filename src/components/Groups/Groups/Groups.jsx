@@ -86,7 +86,7 @@ const Groups = () => {
     return (
         <div className='p-4'>
             <div className='flex justify-between'>
-                <h1 className='text-3xl font-bold'>Users</h1>
+                <h1 className='text-3xl font-bold'>Groups</h1>
                 <Link to='/create-groups'><button className='btn py-2 px-4 rounded text-white'>Create Group</button></Link>
             </div>
             <div className="p-4 border mt-2">
