@@ -1,0 +1,112 @@
+[
+    {
+        "_id": "1",
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "phone": "123-456-7890",
+        "password": "password123",
+        "gender": "Male",
+        "country": "United States",
+        "status": "Active",
+        "about": "John is a software developer with 5 years of experience in full-stack development."
+    },
+    {
+        "_id": "2",
+        "name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "phone": "234-567-8901",
+        "password": "password234",
+        "gender": "Female",
+        "country": "Canada",
+        "status": "Active",
+        "about": "Jane is a graphic designer specializing in web design and branding."
+    },
+    {
+        "_id": "3",
+        "name": "Sam Wilson",
+        "email": "sam.wilson@example.com",
+        "phone": "345-678-9012",
+        "password": "password345",
+        "gender": "Male",
+        "country": "Australia",
+        "status": "Inactive",
+        "about": "Sam is a project manager with a background in software development."
+    },
+    {
+        "_id": "4",
+        "name": "Lucy Brown",
+        "email": "lucy.brown@example.com",
+        "phone": "456-789-0123",
+        "password": "password456",
+        "gender": "Female",
+        "country": "United Kingdom",
+        "status": "Active",
+        "about": "Lucy is a marketing specialist with expertise in digital marketing."
+    },
+    {
+        "_id": "5",
+        "name": "Michael Johnson",
+        "email": "michael.johnson@example.com",
+        "phone": "567-890-1234",
+        "password": "password567",
+        "gender": "Male",
+        "country": "New Zealand",
+        "status": "Inactive",
+        "about": "Michael is a data analyst with experience in big data and machine learning."
+    },
+    {
+        "_id": "6",
+        "name": "Emma Davis",
+        "email": "emma.davis@example.com",
+        "phone": "678-901-2345",
+        "password": "password678",
+        "gender": "Female",
+        "country": "Ireland",
+        "status": "Active",
+        "about": "Emma is a content writer with a focus on technology and software."
+    },
+    {
+        "_id": "7",
+        "name": "David Clark",
+        "email": "david.clark@example.com",
+        "phone": "789-012-3456",
+        "password": "password789",
+        "gender": "Male",
+        "country": "Germany",
+        "status": "Inactive",
+        "about": "David is a network engineer with a passion for cybersecurity."
+    },
+    {
+        "_id": "8",
+        "name": "Sophia Martinez",
+        "email": "sophia.martinez@example.com",
+        "phone": "890-123-4567",
+        "password": "password890",
+        "gender": "Female",
+        "country": "Spain",
+        "status": "Active",
+        "about": "Sophia is a software tester with experience in automated testing tools."
+    },
+    {
+        "_id": "9",
+        "name": "Chris Lee",
+        "email": "chris.lee@example.com",
+        "phone": "901-234-5678",
+        "password": "password901",
+        "gender": "Male",
+        "country": "South Korea",
+        "status": "Inactive",
+        "about": "Chris is a mobile app developer with expertise in Android and iOS."
+    },
+    {
+        "_id": "10",
+        "name": "Olivia White",
+        "email": "olivia.white@example.com",
+        "phone": "012-345-6789",
+        "password": "password012",
+        "gender": "Female",
+        "country": "France",
+        "status": "Active",
+        "about": "Olivia is a UX/UI designer with a strong background in user research."
+    }
+]

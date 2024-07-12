@@ -10,7 +10,7 @@ const NavBarItem = () => {
     return (
         <Navbar fluid rounded>
             <Navbar.Brand>
-                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">GS Mails</span>
+                <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">GS Mails</span>
             </Navbar.Brand>
             <div className="flex md:order-2">
                 <Dropdown

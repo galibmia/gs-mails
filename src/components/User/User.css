@@ -1,0 +1,9 @@
+
+.text-green-500 {
+    
+    color: #34D399;
+}
+
+.text-red-500 {
+    color: #EF4444; /* Red color for inactive status */
+}

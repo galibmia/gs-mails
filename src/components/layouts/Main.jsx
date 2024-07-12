@@ -6,9 +6,9 @@ import { Outlet } from 'react-router-dom';
 const Main = () => {
     return (
         <div className="h-screen flex flex-col">
-            <NavBarItem />
-            <div className="flex flex-1">
-                <div className="w-64"> {/* Adjust the width of the sidebar as needed */}
+            <div className='border'><NavBarItem /></div>
+            <div className="flex flex-1 gap-8">
+                <div className="w-72 border border-t-0 rounded-sm"> {/* Adjust the width of the sidebar as needed */}
                     <Sidebar />
                 </div>
                 <div className="flex-1">

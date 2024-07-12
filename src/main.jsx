@@ -8,6 +8,8 @@ import {
 import Main from './components/layouts/Main.jsx';
 import Dashboard from './components/Dashboard/Dashboard.jsx';
 import Login from './components/Login/Login.jsx';
+import CreateUser from './components/CreateUser/CreateUser.jsx';
+import User from './components/User/User.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
         path: '/',
         element: <Dashboard></Dashboard>
       },
+      {
+        path: 'users',
+        element: <User></User>
+      },
+      {
+        path: 'create-user',
+        element: <CreateUser></CreateUser>
+      }
     ]
   },
   {
