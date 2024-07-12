@@ -1,52 +1,53 @@
 [
     {
-        "category_id": 1,
-        "name": "Electronics",
-        "status": "Active"
+      "category_id": 1,
+      "name": "Onboarding",
+      "status": "Active"
     },
     {
-        "category_id": 2,
-        "name": "Books",
-        "status": "Active"
+      "category_id": 2,
+      "name": "Account",
+      "status": "Active"
     },
     {
-        "category_id": 3,
-        "name": "Clothing",
-        "status": "Inactive"
+      "category_id": 3,
+      "name": "Subscription",
+      "status": "Inactive"
     },
     {
-        "category_id": 4,
-        "name": "Home Appliances",
-        "status": "Active"
+      "category_id": 4,
+      "name": "Order",
+      "status": "Active"
     },
     {
-        "category_id": 5,
-        "name": "Toys",
-        "status": "Inactive"
+      "category_id": 5,
+      "name": "Feedback",
+      "status": "Active"
     },
     {
-        "category_id": 6,
-        "name": "Sports",
-        "status": "Active"
+      "category_id": 6,
+      "name": "Promotions",
+      "status": "Inactive"
     },
     {
-        "category_id": 7,
-        "name": "Furniture",
-        "status": "Inactive"
+      "category_id": 7,
+      "name": "Newsletter",
+      "status": "Active"
     },
     {
-        "category_id": 8,
-        "name": "Beauty",
-        "status": "Active"
+      "category_id": 8,
+      "name": "Events",
+      "status": "Active"
     },
     {
-        "category_id": 9,
-        "name": "Automotive",
-        "status": "Inactive"
+      "category_id": 9,
+      "name": "Support",
+      "status": "Active"
     },
     {
-        "category_id": 10,
-        "name": "Groceries",
-        "status": "Active"
+      "category_id": 10,
+      "name": "Updates",
+      "status": "Active"
     }
-]
+  ]
+  

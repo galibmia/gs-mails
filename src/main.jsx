@@ -20,6 +20,9 @@ import CreateContacts from './components/ContactsManagement/CreateContact/Create
 import Categories from './components/CategoryManagement/Categories/Categories.jsx';
 import UpdateCategory from './components/CategoryManagement/UpdateCategory/UpdateCategory.jsx';
 import CreateCategory from './components/CategoryManagement/CreateCategory/CreateCategory.jsx';
+import Templates from './components/TemplatesManagement/Templates/Templates.jsx';
+import CreateTemplates from './components/TemplatesManagement/CreateTemplates/CreateTemplates.jsx';
+import UpdateTemplates from './components/TemplatesManagement/UpdateTemplates/UpdateTemplates.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +33,7 @@ const router = createBrowserRouter([
         path: '/',
         element: <Dashboard></Dashboard>
       },
+      // Users Routes
       {
         path: 'users',
         element: <User></User>
@@ -42,6 +46,7 @@ const router = createBrowserRouter([
         path: 'users/update-user/:id',
         element: <UpdateUser></UpdateUser>
       },
+      // Groups Routes
       {
         path: 'groups',
         element: <Groups></Groups>
@@ -54,6 +59,7 @@ const router = createBrowserRouter([
         path: 'groups/update-groups/:id',
         element: <UpdateGroups></UpdateGroups>
       },
+      // COntacts Routes
       {
         path: 'contacts',
         element: <Contacts></Contacts>
@@ -66,6 +72,7 @@ const router = createBrowserRouter([
         path: 'contacts/update-contacts/:id',
         element: <UpdateContact></UpdateContact>
       },
+      // Categories Routes
       {
         path: 'categories',
         element: <Categories></Categories>
@@ -77,6 +84,19 @@ const router = createBrowserRouter([
       {
         path: 'categories/update-categories/:id',
         element: <UpdateCategory></UpdateCategory>
+      },
+      // Templates Routes
+      {
+        path: 'templates',
+        element: <Templates></Templates>
+      },
+      {
+        path: 'templates/create-templates',
+        element: <CreateTemplates></CreateTemplates>
+      },
+      {
+        path: 'templates/update-templates/:id',
+        element: <UpdateTemplates></UpdateTemplates>
       },
     ]
   },
