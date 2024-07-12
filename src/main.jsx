@@ -14,6 +14,9 @@ import UpdateUser from './components/UserManagement/UpdateUser/UpdateUser.jsx';
 import Groups from './components/Groups/Groups/Groups.jsx';
 import UpdateGroups from './components/Groups/UpdateGroups/UpdateGroups.jsx';
 import CreateGroups from './components/Groups/CreateGroups/CreateGroups.jsx';
+import Contacts from './components/ContactsManagement/Contacts/Contacts.jsx';
+import UpdateContact from './components/ContactsManagement/UpdateContact/UpdateContact.jsx';
+import CreateContacts from './components/ContactsManagement/CreateContact/CreateContacts.jsx';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +54,18 @@ const router = createBrowserRouter([
       {
         path: 'groups',
         element: <Groups></Groups>
+      },
+      {
+        path: 'contacts',
+        element: <Contacts></Contacts>
+      },
+      {
+        path: 'create-contacts',
+        element: <CreateContacts></CreateContacts>
+      },
+      {
+        path: 'update-contacts/:id',
+        element: <UpdateContact></UpdateContact>
       },
     ]
   },
