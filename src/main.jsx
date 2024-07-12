@@ -11,12 +11,15 @@ import Login from './components/Login/Login.jsx';
 import CreateUser from './components/UserManagement/CreateUser/CreateUser.jsx';
 import User from './components/UserManagement/User/User.jsx';
 import UpdateUser from './components/UserManagement/UpdateUser/UpdateUser.jsx';
-import Groups from './components/Groups/Groups/Groups.jsx';
-import UpdateGroups from './components/Groups/UpdateGroups/UpdateGroups.jsx';
-import CreateGroups from './components/Groups/CreateGroups/CreateGroups.jsx';
+import Groups from './components/GroupsManagement/Groups/Groups.jsx';
+import UpdateGroups from './components/GroupsManagement/UpdateGroups/UpdateGroups.jsx';
+import CreateGroups from './components/GroupsManagement/CreateGroups/CreateGroups.jsx';
 import Contacts from './components/ContactsManagement/Contacts/Contacts.jsx';
 import UpdateContact from './components/ContactsManagement/UpdateContact/UpdateContact.jsx';
 import CreateContacts from './components/ContactsManagement/CreateContact/CreateContacts.jsx';
+import Categories from './components/CategoryManagement/Categories/Categories.jsx';
+import UpdateCategory from './components/CategoryManagement/UpdateCategory/UpdateCategory.jsx';
+import CreateCategory from './components/CategoryManagement/CreateCategory/CreateCategory.jsx';
 
 const router = createBrowserRouter([
   {
@@ -32,40 +35,48 @@ const router = createBrowserRouter([
         element: <User></User>
       },
       {
-        path: 'create-user',
+        path: 'users/create-user',
         element: <CreateUser></CreateUser>
       },
       {
-        path: 'update-user/:id',
+        path: 'users/update-user/:id',
         element: <UpdateUser></UpdateUser>
       },
       {
-        path: 'update-groups/:id',
-        element: <UpdateGroups></UpdateGroups>
+        path: 'groups',
+        element: <Groups></Groups>
       },
       {
-        path: 'create-groups',
+        path: 'groups/create-groups',
         element: <CreateGroups></CreateGroups>
       },
       {
-        path: 'groups',
-        element: <Groups></Groups>
-      },
-      {
-        path: 'groups',
-        element: <Groups></Groups>
+        path: 'groups/update-groups/:id',
+        element: <UpdateGroups></UpdateGroups>
       },
       {
         path: 'contacts',
         element: <Contacts></Contacts>
       },
       {
-        path: 'create-contacts',
+        path: 'contacts/create-contacts',
         element: <CreateContacts></CreateContacts>
       },
       {
-        path: 'update-contacts/:id',
+        path: 'contacts/update-contacts/:id',
         element: <UpdateContact></UpdateContact>
+      },
+      {
+        path: 'categories',
+        element: <Categories></Categories>
+      },
+      {
+        path: 'categories/create-categories',
+        element: <CreateCategory></CreateCategory>
+      },
+      {
+        path: 'categories/update-categories/:id',
+        element: <UpdateCategory></UpdateCategory>
       },
     ]
   },

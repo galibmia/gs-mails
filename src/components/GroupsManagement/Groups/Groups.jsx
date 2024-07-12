@@ -4,52 +4,49 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from 'react-icons/fa';
-import "./User.css"
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const User = () => {
+const Groups = () => {
 
-    const [users, setUsers] = useState([]);
-    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [filteredGroups, setFilteredGroups] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        fetch('/user.json')
+        fetch('/groups.json')
             .then(res => res.json())
             .then(data => {
-                setUsers(data);
-                setFilteredUsers(data); // Initially set filteredUsers to all users
+                setGroups(data);
+                setFilteredGroups(data); // Initially set filteredgroups to all groups
             })
     }, []);
 
     const onFilterChange = (newStatus) => {
         setStatus(newStatus);
-        filterUsers(newStatus, searchTerm);
+        filterGroups(newStatus, searchTerm);
     };
 
-    const filterUsers = (status, searchTerm) => {
-        let filtered = users;
+    const filterGroups = (status, searchTerm) => {
+        let filtered = groups;
         if (status !== 'All') {
-            filtered = filtered.filter(user => user.status === status);
+            filtered = filtered.filter(group => group.status === status);
         }
         // Check the search item and match
         if (searchTerm) {
-            filtered = filtered.filter(user =>
-                user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                user.phone.toLowerCase().includes(searchTerm.toLowerCase())
+            filtered = filtered.filter(group =>
+                group.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
-        setFilteredUsers(filtered);
+        setFilteredGroups(filtered);
     };
 
     const handleSearchChange = (event) => {
         const value = event.target.value;
         setSearchTerm(value);
-        filterUsers(status, value);
+        filterGroups(status, value);
     };
 
 
@@ -66,7 +63,7 @@ const User = () => {
         onFilterChange(newStatus);
     };
 
-    const handleDeleteUser = (id) => {
+    const handleDeleteGroup = (id) => {
         Swal.fire({
             title: `Are you sure to delete id ${id}?`,
             text: "You won't be able to revert this!",
@@ -89,8 +86,8 @@ const User = () => {
     return (
         <div className='p-4'>
             <div className='flex justify-between'>
-                <h1 className='text-3xl font-bold'>Users</h1>
-                <Link to='/users/create-user'><button className='btn py-2 px-4 rounded text-white'>Create User</button></Link>
+                <h1 className='text-3xl font-bold'>Groups</h1>
+                <Link to='/groups/create-groups'><button className='btn py-2 px-4 rounded text-white'>Create Group</button></Link>
             </div>
             <div className="p-4 border mt-2">
                 <div className='flex ml-[80%]'>
@@ -138,27 +135,25 @@ const User = () => {
                     <Table.Head>
                         <Table.HeadCell>#</Table.HeadCell>
                         <Table.HeadCell>Name</Table.HeadCell>
-                        <Table.HeadCell>Email</Table.HeadCell>
-                        <Table.HeadCell>Phone</Table.HeadCell>
+                        <Table.HeadCell>Contact</Table.HeadCell>
                         <Table.HeadCell>Status</Table.HeadCell>
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {filteredUsers.map(user => (
-                            <Table.Row key={user._id} className="bg-white">
-                                <Table.Cell>{user._id}</Table.Cell>
-                                <Table.Cell>{user.name}</Table.Cell>
-                                <Table.Cell>{user.email}</Table.Cell>
-                                <Table.Cell>{user.phone}</Table.Cell>
-                                <Table.Cell className={`status-cell ${getStatusColor(user.status)}`}>
-                                    {user.status}
+                        {filteredGroups.map(group => (
+                            <Table.Row key={group._id} className="bg-white">
+                                <Table.Cell>{group._id}</Table.Cell>
+                                <Table.Cell>{group.name}</Table.Cell>
+                                <Table.Cell>10</Table.Cell>
+                                <Table.Cell className={`status-cell ${getStatusColor(group.status)}`}>
+                                    {group.status}
                                 </Table.Cell>
                                 <Table.Cell className='flex'>
-                                    <Link to={`/users/update-user/${user._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
+                                    <Link to={`/groups/update-groups/${group._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
                                         <FaRegEdit className="text-md" />
                                         <span className="ml-1 text-md">Edit</span>
                                     </Link>
-                                    <button onClick={() => handleDeleteUser(user._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
+                                    <button onClick={() => handleDeleteGroup(group._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
                                         <MdDelete className="text-md" />
                                         <span className="ml-1 text-md">Delete</span>
                                     </button>
@@ -172,4 +167,4 @@ const User = () => {
     );
 };
 
-export default User;
+export default Groups;

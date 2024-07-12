@@ -28,7 +28,7 @@ const UpdateUser = () => {
     return (
         <div>
             <form onSubmit={handleUpdateUser} className="w-full">
-                <h1 className='text-4xl my-5'>Create User</h1>
+                <h1 className='text-4xl my-5'>Update User</h1>
                 <div className='flex gap-8'>
                     <div className='flex flex-col gap-4 w-[60%] border p-4'>
                         <div>

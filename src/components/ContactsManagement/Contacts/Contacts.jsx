@@ -89,7 +89,7 @@ const Contacts = () => {
         <div className='p-4'>
             <div className='flex justify-between'>
                 <h1 className='text-3xl font-bold'>Email Contacts</h1>
-                <Link to='/create-contacts'><button className='btn py-2 px-4 rounded text-white'>New email contact</button></Link>
+                <Link to='/contacts/create-contacts'><button className='btn py-2 px-4 rounded text-white'>New email contact</button></Link>
             </div>
             <div className="p-4 border mt-2">
                 <div className='flex ml-[80%]'>
@@ -153,7 +153,7 @@ const Contacts = () => {
                                     {user.status}
                                 </Table.Cell>
                                 <Table.Cell className='flex'>
-                                    <Link to={`/update-contacts/${user._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
+                                    <Link to={`/contacts/update-contacts/${user._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
                                         <FaRegEdit className="text-md" />
                                         <span className="ml-1 text-md">Edit</span>
                                     </Link>

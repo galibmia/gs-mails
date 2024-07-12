@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Select, Table } from "flowbite-react";
+import { Table } from "flowbite-react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
@@ -7,46 +7,46 @@ import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const Groups = () => {
+const Categories = () => {
 
-    const [groups, setGroups] = useState([]);
-    const [filteredGroups, setFilteredGroups] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [filteredCategories, setFilteredCategories] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        fetch('/groups.json')
+        fetch('/categories.json')
             .then(res => res.json())
             .then(data => {
-                setGroups(data);
-                setFilteredGroups(data); // Initially set filteredgroups to all groups
+                setCategories(data);
+                setFilteredCategories(data); // Initially set filteredgroups to all groups
             })
     }, []);
 
     const onFilterChange = (newStatus) => {
         setStatus(newStatus);
-        filterGroups(newStatus, searchTerm);
+        filterCategories(newStatus, searchTerm);
     };
 
-    const filterGroups = (status, searchTerm) => {
-        let filtered = groups;
+    const filterCategories = (status, searchTerm) => {
+        let filtered = categories;
         if (status !== 'All') {
-            filtered = filtered.filter(group => group.status === status);
+            filtered = filtered.filter(category => category.status === status);
         }
         // Check the search item and match
         if (searchTerm) {
-            filtered = filtered.filter(group =>
-                group.name.toLowerCase().includes(searchTerm.toLowerCase())
+            filtered = filtered.filter(category =>
+                category.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
-        setFilteredGroups(filtered);
+        setFilteredCategories(filtered);
     };
 
     const handleSearchChange = (event) => {
         const value = event.target.value;
         setSearchTerm(value);
-        filterGroups(status, value);
+        filterCategories(status, value);
     };
 
 
@@ -86,8 +86,8 @@ const Groups = () => {
     return (
         <div className='p-4'>
             <div className='flex justify-between'>
-                <h1 className='text-3xl font-bold'>Groups</h1>
-                <Link to='/create-groups'><button className='btn py-2 px-4 rounded text-white'>Create Group</button></Link>
+                <h1 className='text-3xl font-bold'>Categories</h1>
+                <Link to='/categories/create-categories'><button className='btn py-2 px-4 rounded text-white'>New Category</button></Link>
             </div>
             <div className="p-4 border mt-2">
                 <div className='flex ml-[80%]'>
@@ -132,28 +132,26 @@ const Groups = () => {
                     </div>
                 </div>
                 <Table striped>
-                    <Table.Head>
-                        <Table.HeadCell>#</Table.HeadCell>
-                        <Table.HeadCell>Name</Table.HeadCell>
-                        <Table.HeadCell>Contact</Table.HeadCell>
-                        <Table.HeadCell>Status</Table.HeadCell>
-                        <Table.HeadCell></Table.HeadCell>
+                    <Table.Head className='text-center custom-style'>
+                        <Table.HeadCell >#</Table.HeadCell>
+                        <Table.HeadCell >Name</Table.HeadCell>
+                        <Table.HeadCell >Status</Table.HeadCell>
+                        <Table.HeadCell ></Table.HeadCell>
                     </Table.Head>
-                    <Table.Body className="divide-y">
-                        {filteredGroups.map(group => (
-                            <Table.Row key={group._id} className="bg-white">
-                                <Table.Cell>{group._id}</Table.Cell>
-                                <Table.Cell>{group.name}</Table.Cell>
-                                <Table.Cell>10</Table.Cell>
-                                <Table.Cell className={`status-cell ${getStatusColor(group.status)}`}>
-                                    {group.status}
+                    <Table.Body className="divide-y text-center">
+                        {filteredCategories.map(category => (
+                            <Table.Row key={category.category_id} className="bg-white">
+                                <Table.Cell >{category.category_id}</Table.Cell>
+                                <Table.Cell >{category.name}</Table.Cell>
+                                <Table.Cell className={`status-cell ${getStatusColor(category.status)}`}>
+                                    {category.status}
                                 </Table.Cell>
-                                <Table.Cell className='flex'>
-                                    <Link to={`/update-groups/${group._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
+                                <Table.Cell className='flex items-center justify-center'>
+                                    <Link to={`/categories/update-categories/${category.category_id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
                                         <FaRegEdit className="text-md" />
                                         <span className="ml-1 text-md">Edit</span>
                                     </Link>
-                                    <button onClick={() => handleDeleteGroup(group._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
+                                    <button onClick={() => handleDeleteGroup(category.category_id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
                                         <MdDelete className="text-md" />
                                         <span className="ml-1 text-md">Delete</span>
                                     </button>
@@ -167,4 +165,4 @@ const Groups = () => {
     );
 };
 
-export default Groups;
+export default Categories;
