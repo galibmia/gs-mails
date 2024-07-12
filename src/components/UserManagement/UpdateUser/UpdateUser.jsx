@@ -113,7 +113,7 @@ const UpdateUser = () => {
                         </div>
                     </div>
                 </div>
-                <input type="submit" className='btn text-white py-2 rounded-md cursor-pointer w-[200px] mt-5' value="Create" />
+                <input type="submit" className='btn text-white py-2 rounded-md cursor-pointer w-[200px] mt-5' value="Update" />
                 <Link to='/users' className='ml-8 text-gray-900 h-[24px] p-2 border rounded-md'>Cancel</Link>
             </form>
         </div>

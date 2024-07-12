@@ -1,0 +1,39 @@
+[
+    {
+      "_id": "1",
+      "name": "Family",
+      "contacts": 15,
+      "status": "Active"
+    },
+    {
+      "_id": "2",
+      "name": "Friends",
+      "contacts": 20,
+      "status": "Active"
+    },
+    {
+      "_id": "3",
+      "name": "Work",
+      "contacts": 10,
+      "status": "Inactive"
+    },
+    {
+      "_id": "4",
+      "name": "Gym",
+      "contacts": 5,
+      "status": "Active"
+    },
+    {
+      "_id": "5",
+      "name": "Book Club",
+      "contacts": 8,
+      "status": "Inactive"
+    },
+    {
+      "_id": "6",
+      "name": "Travel",
+      "contacts": 12,
+      "status": "Active"
+    }
+  ]
+  
