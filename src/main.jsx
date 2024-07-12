@@ -10,6 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard.jsx';
 import Login from './components/Login/Login.jsx';
 import CreateUser from './components/CreateUser/CreateUser.jsx';
 import User from './components/User/User.jsx';
+import UpdateUser from './components/UpdateUser/UpdateUser.jsx';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,11 @@ const router = createBrowserRouter([
       {
         path: 'create-user',
         element: <CreateUser></CreateUser>
-      }
+      },
+      {
+        path: 'update-user/:id',
+        element: <UpdateUser></UpdateUser>
+      },
     ]
   },
   {
