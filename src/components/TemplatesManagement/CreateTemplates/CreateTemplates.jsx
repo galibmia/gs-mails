@@ -44,7 +44,7 @@ const CreateTemplates = () => {
                         <Label htmlFor="subject">
                             Body <span className="text-red-500">*</span>
                         </Label>
-                        <Textarea rows={8} className='' id="name" type="text" name='about' shadow />
+                        <Textarea rows={8} className='resize-none' id="name" type="text" name='about' shadow />
                     </div>
                     <div className='flex gap-5'>
                         <div className='w-1/2'>
@@ -75,7 +75,7 @@ const CreateTemplates = () => {
                     </div>
                 </div>
                 <input type="submit" className='btn text-white py-2 rounded-md cursor-pointer w-[200px] mt-5' value="Create" />
-                <Link to='/categories' className='ml-8 text-gray-900 h-[24px] p-2 border rounded-md'>Cancel</Link>
+                <Link to='/templates' className='ml-8 text-gray-900 h-[24px] p-2 border rounded-md'>Cancel</Link>
             </form>
         </div>
     );
