@@ -23,6 +23,9 @@ import CreateCategory from './components/CategoryManagement/CreateCategory/Creat
 import Templates from './components/TemplatesManagement/Templates/Templates.jsx';
 import CreateTemplates from './components/TemplatesManagement/CreateTemplates/CreateTemplates.jsx';
 import UpdateTemplates from './components/TemplatesManagement/UpdateTemplates/UpdateTemplates.jsx';
+import Campaigns from './components/CampaignsManagement/Campaigns/Campaigns';
+import CreateCampaigns from './components/CampaignsManagement/CreateCampaigns/CreateCampaigns';
+import UpdateCampaigns from './components/CampaignsManagement/UpdateCampaigns/UpdateCampaigns';
 
 const router = createBrowserRouter([
   {
@@ -97,6 +100,19 @@ const router = createBrowserRouter([
       {
         path: 'templates/update-templates/:id',
         element: <UpdateTemplates></UpdateTemplates>
+      },
+      // Campaign Routes
+      {
+        path: 'campaigns',
+        element: <Campaigns></Campaigns>
+      },
+      {
+        path: 'campaigns/create-campaigns',
+        element: <CreateCampaigns></CreateCampaigns>
+      },
+      {
+        path: 'campaigns/update-campaigns/:id',
+        element: <UpdateCampaigns></UpdateCampaigns>
       },
     ]
   },

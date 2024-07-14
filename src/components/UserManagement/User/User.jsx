@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Select, Table } from "flowbite-react";
+import { Pagination, Select, Table } from "flowbite-react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
@@ -15,6 +15,9 @@ const User = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
+    // Pagination item
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8; // Set the number of content show per page
 
     useEffect(() => {
         fetch('/user.json')
@@ -86,6 +89,15 @@ const User = () => {
         });
     }
 
+
+    // Pagination
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const selectedItems = filteredUsers.slice(startIndex, startIndex + itemsPerPage);
+
     return (
         <div className='p-4'>
             <div className='flex justify-between'>
@@ -144,7 +156,7 @@ const User = () => {
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {filteredUsers.map(user => (
+                        {selectedItems.map(user => (
                             <Table.Row key={user._id} className="bg-white">
                                 <Table.Cell>{user._id}</Table.Cell>
                                 <Table.Cell>{user.name}</Table.Cell>
@@ -167,6 +179,14 @@ const User = () => {
                         ))}
                     </Table.Body>
                 </Table>
+            </div>
+            <div>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(filteredUsers.length / itemsPerPage)}
+                    onPageChange={onPageChange}
+                    showIcons
+                />
             </div>
         </div>
     );

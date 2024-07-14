@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Select, Table } from "flowbite-react";
+import { Pagination, Select, Table } from "flowbite-react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
@@ -14,6 +14,9 @@ const Contacts = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
+    // Pagination item
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8; // Set the number of content show per page
 
     useEffect(() => {
         fetch('/user.json')
@@ -43,6 +46,7 @@ const Contacts = () => {
             );
         }
         setFilteredContacts(filtered);
+        setCurrentPage(1); // Reset to the first page after filtering
     };
 
     const handleSearchChange = (event) => {
@@ -83,7 +87,15 @@ const Contacts = () => {
                 });
             }
         });
-    }
+    };
+
+    // Pagination
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const selectedItems = filteredContacts.slice(startIndex, startIndex + itemsPerPage);
 
     return (
         <div className='p-4'>
@@ -143,21 +155,21 @@ const Contacts = () => {
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {filteredContacts.map(user => (
-                            <Table.Row key={user._id} className="bg-white">
-                                <Table.Cell>{user._id}</Table.Cell>
-                                <Table.Cell>{user.name}</Table.Cell>
-                                <Table.Cell>{user.email}</Table.Cell>
-                                <Table.Cell>{user.phone}</Table.Cell>
-                                <Table.Cell className={`status-cell ${getStatusColor(user.status)}`}>
-                                    {user.status}
+                        {selectedItems.map(contact => (
+                            <Table.Row key={contact._id} className="bg-white">
+                                <Table.Cell>{contact._id}</Table.Cell>
+                                <Table.Cell>{contact.name}</Table.Cell>
+                                <Table.Cell>{contact.email}</Table.Cell>
+                                <Table.Cell>{contact.phone}</Table.Cell>
+                                <Table.Cell className={`status-cell ${getStatusColor(contact.status)}`}>
+                                    {contact.status}
                                 </Table.Cell>
                                 <Table.Cell className='flex'>
-                                    <Link to={`/contacts/update-contacts/${user._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
+                                    <Link to={`/contacts/update-contacts/${contact._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
                                         <FaRegEdit className="text-md" />
                                         <span className="ml-1 text-md">Edit</span>
                                     </Link>
-                                    <button onClick={() => handleDeleteContact(user._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
+                                    <button onClick={() => handleDeleteContact(contact._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
                                         <MdDelete className="text-md" />
                                         <span className="ml-1 text-md">Delete</span>
                                     </button>
@@ -166,6 +178,14 @@ const Contacts = () => {
                         ))}
                     </Table.Body>
                 </Table>
+            </div>
+            <div>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(filteredContacts.length / itemsPerPage)}
+                    onPageChange={onPageChange}
+                    showIcons
+                />
             </div>
         </div>
     );

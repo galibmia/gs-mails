@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Select, Table } from "flowbite-react";
+import { Select, Table, Pagination } from "flowbite-react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
@@ -8,19 +8,24 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const Templates = () => {
-
     const [templates, setTemplates] = useState([]);
+
+    // Search and filter item
     const [filteredTemplates, setFilteredTemplates] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
+    // Pagination item
+    const [currentPage, setCurrentPage] = useState(1); 
+    const itemsPerPage = 8; // Set the number of content show per page
 
+    // get the data
     useEffect(() => {
         fetch('/templates.json')
             .then(res => res.json())
             .then(data => {
                 setTemplates(data);
-                setFilteredTemplates(data); // Initially set filteredgroups to all groups
+                setFilteredTemplates(data); // Initially set filtered templates to all templates
             })
     }, []);
 
@@ -41,6 +46,7 @@ const Templates = () => {
             );
         }
         setFilteredTemplates(filtered);
+        setCurrentPage(1); // Reset to the first page after filtering
     };
 
     const handleSearchChange = (event) => {
@@ -48,7 +54,6 @@ const Templates = () => {
         setSearchTerm(value);
         filterTemplates(status, value);
     };
-
 
     // Get status color and change
     const getStatusColor = (status) => {
@@ -63,7 +68,7 @@ const Templates = () => {
         onFilterChange(newStatus);
     };
 
-    const handleDeleteGroup = (id) => {
+    const handleDeleteTemplates = (id) => {
         Swal.fire({
             title: `Are you sure to delete id ${id}?`,
             text: "You won't be able to revert this!",
@@ -81,7 +86,16 @@ const Templates = () => {
                 });
             }
         });
-    }
+    };
+
+
+    // Pagination
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const selectedItems = filteredTemplates.slice(startIndex, startIndex + itemsPerPage);
 
     return (
         <div className='p-4'>
@@ -140,20 +154,20 @@ const Templates = () => {
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {filteredTemplates.map(group => (
-                            <Table.Row key={group._id} className="bg-white">
-                                <Table.Cell>{group._id}</Table.Cell>
-                                <Table.Cell>{group.subject}</Table.Cell>
-                                <Table.Cell>{group.category}</Table.Cell>
-                                <Table.Cell className={`status-cell ${getStatusColor(group.status)}`}>
-                                    {group.status}
+                        {selectedItems.map(template => (
+                            <Table.Row key={template._id} className="bg-white">
+                                <Table.Cell>{template._id}</Table.Cell>
+                                <Table.Cell>{template.subject}</Table.Cell>
+                                <Table.Cell>{template.category}</Table.Cell>
+                                <Table.Cell className={`status-cell ${getStatusColor(template.status)}`}>
+                                    {template.status}
                                 </Table.Cell>
                                 <Table.Cell className='flex'>
-                                    <Link to={`/groups/update-groups/${group._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
+                                    <Link to={`/templates/update-templates/${template._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
                                         <FaRegEdit className="text-md" />
                                         <span className="ml-1 text-md">Edit</span>
                                     </Link>
-                                    <button onClick={() => handleDeleteGroup(group._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
+                                    <button onClick={() => handleDeleteTemplates(template._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
                                         <MdDelete className="text-md" />
                                         <span className="ml-1 text-md">Delete</span>
                                     </button>
@@ -162,6 +176,15 @@ const Templates = () => {
                         ))}
                     </Table.Body>
                 </Table>
+                
+            </div>
+            <div>
+            <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(filteredTemplates.length / itemsPerPage)}
+                    onPageChange={onPageChange}
+                    showIcons
+                />
             </div>
         </div>
     );

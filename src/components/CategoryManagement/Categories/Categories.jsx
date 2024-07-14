@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from "flowbite-react";
+import { Pagination, Table } from "flowbite-react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
@@ -14,6 +14,10 @@ const Categories = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
+
+    // Pagination item
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8; // Set the number of content show per page
 
     useEffect(() => {
         fetch('/categories.json')
@@ -83,6 +87,13 @@ const Categories = () => {
         });
     }
 
+    // Pagination
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+    };
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const selectedItems = filteredCategories.slice(startIndex, startIndex + itemsPerPage);
+
     return (
         <div className='p-4'>
             <div className='flex justify-between'>
@@ -139,7 +150,7 @@ const Categories = () => {
                         <Table.HeadCell ></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y text-center">
-                        {filteredCategories.map(category => (
+                        {selectedItems.map(category => (
                             <Table.Row key={category.category_id} className="bg-white">
                                 <Table.Cell >{category.category_id}</Table.Cell>
                                 <Table.Cell >{category.name}</Table.Cell>
@@ -160,6 +171,14 @@ const Categories = () => {
                         ))}
                     </Table.Body>
                 </Table>
+            </div>
+            <div>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(filteredCategories.length / itemsPerPage)}
+                    onPageChange={onPageChange}
+                    showIcons
+                />
             </div>
         </div>
     );

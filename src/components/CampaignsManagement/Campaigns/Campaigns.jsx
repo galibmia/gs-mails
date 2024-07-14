@@ -7,49 +7,52 @@ import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const Groups = () => {
+const Campaigns = () => {
 
-    const [groups, setGroups] = useState([]);
-    const [filteredGroups, setFilteredGroups] = useState([]);
+    const [campaign, setCampaign] = useState([]);
+    const [filteredCampaign, setFilteredCampaign] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
     // Pagination item
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; // Set the number of content show per page
+    const itemsPerPage = 8; // Set the number of content show per page
 
     useEffect(() => {
-        fetch('/groups.json')
+        fetch('/campaign.json')
             .then(res => res.json())
             .then(data => {
-                setGroups(data);
-                setFilteredGroups(data); // Initially set filteredgroups to all groups
+                setCampaign(data);
+                setFilteredCampaign(data); // Initially set filteredUsers to all users
             })
     }, []);
 
     const onFilterChange = (newStatus) => {
         setStatus(newStatus);
-        filterGroups(newStatus, searchTerm);
+        filterCampaign(newStatus, searchTerm);
     };
 
-    const filterGroups = (status, searchTerm) => {
-        let filtered = groups;
+    const filterCampaign = (status, searchTerm) => {
+        let filtered = campaign;
         if (status !== 'All') {
-            filtered = filtered.filter(group => group.status === status);
+            filtered = filtered.filter(campaign => campaign.status === status);
         }
         // Check the search item and match
         if (searchTerm) {
-            filtered = filtered.filter(group =>
-                group.name.toLowerCase().includes(searchTerm.toLowerCase())
+            filtered = filtered.filter(campaign =>
+                campaign.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                campaign.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                campaign.phone.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
-        setFilteredGroups(filtered);
+        setFilteredCampaign(filtered);
+        setCurrentPage(1); // Reset to the first page after filtering
     };
 
     const handleSearchChange = (event) => {
         const value = event.target.value;
         setSearchTerm(value);
-        filterGroups(status, value);
+        filterCampaign(status, value);
     };
 
 
@@ -66,7 +69,7 @@ const Groups = () => {
         onFilterChange(newStatus);
     };
 
-    const handleDeleteGroup = (id) => {
+    const handleDeleteCampaign = (id) => {
         Swal.fire({
             title: `Are you sure to delete id ${id}?`,
             text: "You won't be able to revert this!",
@@ -84,7 +87,7 @@ const Groups = () => {
                 });
             }
         });
-    }
+    };
 
     // Pagination
     const onPageChange = (page) => {
@@ -92,13 +95,13 @@ const Groups = () => {
     };
 
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const selectedItems = filteredGroups.slice(startIndex, startIndex + itemsPerPage);
+    const selectedItems = filteredCampaign.slice(startIndex, startIndex + itemsPerPage);
 
     return (
         <div className='p-4'>
             <div className='flex justify-between'>
-                <h1 className='text-3xl font-bold'>Groups</h1>
-                <Link to='/groups/create-groups'><button className='btn py-2 px-4 rounded text-white'>Create Group</button></Link>
+                <h1 className='text-3xl font-bold'>Email Campaign</h1>
+                <Link to='/campaigns/create-campaigns'><button className='btn py-2 px-4 rounded text-white'>New email campaign</button></Link>
             </div>
             <div className="p-4 border mt-2">
                 <div className='flex ml-[80%]'>
@@ -146,25 +149,29 @@ const Groups = () => {
                     <Table.Head>
                         <Table.HeadCell>#</Table.HeadCell>
                         <Table.HeadCell>Name</Table.HeadCell>
-                        <Table.HeadCell>Contact</Table.HeadCell>
+                        <Table.HeadCell>Group</Table.HeadCell>
+                        <Table.HeadCell>Template</Table.HeadCell>
+                        <Table.HeadCell>Sending at</Table.HeadCell>
                         <Table.HeadCell>Status</Table.HeadCell>
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {selectedItems.map(group => (
-                            <Table.Row key={group._id} className="bg-white">
-                                <Table.Cell>{group._id}</Table.Cell>
-                                <Table.Cell>{group.name}</Table.Cell>
-                                <Table.Cell>10</Table.Cell>
-                                <Table.Cell className={`status-cell ${getStatusColor(group.status)}`}>
-                                    {group.status}
+                        {selectedItems.map(campaign => (
+                            <Table.Row key={campaign._id} className="bg-white">
+                                <Table.Cell>{campaign._id}</Table.Cell>
+                                <Table.Cell>{campaign.name}</Table.Cell>
+                                <Table.Cell>{campaign.group}</Table.Cell>
+                                <Table.Cell>{campaign.template}</Table.Cell>
+                                <Table.Cell>{campaign.date}, {campaign.sending_time}</Table.Cell>
+                                <Table.Cell className={`status-cell ${getStatusColor(campaign.status)}`}>
+                                    {campaign.status}
                                 </Table.Cell>
                                 <Table.Cell className='flex'>
-                                    <Link to={`/groups/update-groups/${group._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
+                                    <Link to={`/campaigns/update-campaigns/${campaign._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
                                         <FaRegEdit className="text-md" />
                                         <span className="ml-1 text-md">Edit</span>
                                     </Link>
-                                    <button onClick={() => handleDeleteGroup(group._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
+                                    <button onClick={() => handleDeleteCampaign(campaign._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
                                         <MdDelete className="text-md" />
                                         <span className="ml-1 text-md">Delete</span>
                                     </button>
@@ -177,7 +184,7 @@ const Groups = () => {
             <div>
                 <Pagination
                     currentPage={currentPage}
-                    totalPages={Math.ceil(filteredGroups.length / itemsPerPage)}
+                    totalPages={Math.ceil(filteredCampaign.length / itemsPerPage)}
                     onPageChange={onPageChange}
                     showIcons
                 />
@@ -186,4 +193,4 @@ const Groups = () => {
     );
 };
 
-export default Groups;
+export default Campaigns;
