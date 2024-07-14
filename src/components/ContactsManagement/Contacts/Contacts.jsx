@@ -104,7 +104,7 @@ const Contacts = () => {
                 <Link to='/contacts/create-contacts'><button className='btn py-2 px-4 rounded text-white'>New email contact</button></Link>
             </div>
             <div className="p-4 border mt-2">
-                <div className='flex ml-[80%]'>
+                <div className='flex ml-[80%] mb-2'>
                     <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                             <CiSearch className='text-lg' />
@@ -146,7 +146,7 @@ const Contacts = () => {
                     </div>
                 </div>
                 <Table striped>
-                    <Table.Head>
+                    <Table.Head className='border'>
                         <Table.HeadCell>#</Table.HeadCell>
                         <Table.HeadCell>Name</Table.HeadCell>
                         <Table.HeadCell>Email</Table.HeadCell>
@@ -156,7 +156,7 @@ const Contacts = () => {
                     </Table.Head>
                     <Table.Body className="divide-y">
                         {selectedItems.map(contact => (
-                            <Table.Row key={contact._id} className="bg-white">
+                            <Table.Row key={contact._id} className="bg-white border">
                                 <Table.Cell>{contact._id}</Table.Cell>
                                 <Table.Cell>{contact.name}</Table.Cell>
                                 <Table.Cell>{contact.email}</Table.Cell>

@@ -26,6 +26,8 @@ import UpdateTemplates from './components/TemplatesManagement/UpdateTemplates/Up
 import Campaigns from './components/CampaignsManagement/Campaigns/Campaigns';
 import CreateCampaigns from './components/CampaignsManagement/CreateCampaigns/CreateCampaigns';
 import UpdateCampaigns from './components/CampaignsManagement/UpdateCampaigns/UpdateCampaigns';
+import Logs from './components/Logs/Logs';
+import Settings from './components/Settings/Settings';
 
 const router = createBrowserRouter([
   {
@@ -113,6 +115,15 @@ const router = createBrowserRouter([
       {
         path: 'campaigns/update-campaigns/:id',
         element: <UpdateCampaigns></UpdateCampaigns>
+      },
+      // Logs Routes
+      {
+        path: 'logs',
+        element: <Logs></Logs>
+      },
+      {
+        path: 'settings',
+        element: <Settings></Settings>
       },
     ]
   },

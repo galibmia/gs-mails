@@ -4,7 +4,7 @@
         "name": "Welcome Email",
         "group": "New Subscribers",
         "template": "welcome_template",
-        "sending_time": "10:00 AM",
+        "sending_time": "10:00",
         "date": "2024-07-14",
         "status": "Active"
     },
@@ -13,7 +13,7 @@
         "name": "Weekly Newsletter",
         "group": "Subscribers",
         "template": "newsletter_template",
-        "sending_time": "09:00 AM",
+        "sending_time": "09:00",
         "date": "2024-07-15",
         "status": "Active"
     },
@@ -22,7 +22,7 @@
         "name": "Product Launch",
         "group": "All Users",
         "template": "product_launch_template",
-        "sending_time": "11:00 AM",
+        "sending_time": "11:00",
         "date": "2024-07-16",
         "status": "Inactive"
     },
@@ -31,7 +31,7 @@
         "name": "Holiday Greetings",
         "group": "VIP Customers",
         "template": "holiday_greetings_template",
-        "sending_time": "08:00 AM",
+        "sending_time": "08:00",
         "date": "2024-12-25",
         "status": "Active"
     },
@@ -40,7 +40,7 @@
         "name": "Survey Invitation",
         "group": "Feedback Group",
         "template": "survey_invitation_template",
-        "sending_time": "02:00 PM",
+        "sending_time": "14:00",
         "date": "2024-07-17",
         "status": "Inactive"
     },
@@ -49,7 +49,7 @@
         "name": "Discount Offer",
         "group": "Loyal Customers",
         "template": "discount_offer_template",
-        "sending_time": "05:00 PM",
+        "sending_time": "17:00",
         "date": "2024-07-18",
         "status": "Active"
     },
@@ -58,7 +58,7 @@
         "name": "Event Reminder",
         "group": "Event Attendees",
         "template": "event_reminder_template",
-        "sending_time": "07:00 AM",
+        "sending_time": "07:00",
         "date": "2024-07-19",
         "status": "Inactive"
     },
@@ -67,7 +67,7 @@
         "name": "Account Update",
         "group": "Account Holders",
         "template": "account_update_template",
-        "sending_time": "03:00 PM",
+        "sending_time": "15:00",
         "date": "2024-07-20",
         "status": "Active"
     },
@@ -76,7 +76,7 @@
         "name": "Webinar Follow-up",
         "group": "Webinar Participants",
         "template": "webinar_followup_template",
-        "sending_time": "06:00 PM",
+        "sending_time": "18:00",
         "date": "2024-07-21",
         "status": "Active"
     },
@@ -85,7 +85,7 @@
         "name": "Service Alert",
         "group": "All Users",
         "template": "service_alert_template",
-        "sending_time": "01:00 PM",
+        "sending_time": "13:00",
         "date": "2024-07-22",
         "status": "Inactive"
     }

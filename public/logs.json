@@ -1,0 +1,112 @@
+[
+    {
+        "_id": "1",
+        "name": "Alice Johnson",
+        "email": "alice.johnson@example.com",
+        "subject": "Welcome to Our Service",
+        "status": "Sent",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "09:30",
+        "isOpen": true,
+        "isChecked": false
+    },
+    {
+        "_id": "2",
+        "name": "Bob Smith",
+        "email": "bob.smith@example.com",
+        "subject": "Your Order Confirmation",
+        "status": "Failed",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "10:00",
+        "isOpen": false,
+        "isChecked": false
+    },
+    {
+        "_id": "3",
+        "name": "Carol White",
+        "email": "carol.white@example.com",
+        "subject": "Special Offer Just for You",
+        "status": "Sent",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "11:15",
+        "isOpen": true,
+        "isChecked": true
+    },
+    {
+        "_id": "4",
+        "name": "David Brown",
+        "email": "david.brown@example.com",
+        "subject": "Event Reminder",
+        "status": "Sent",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "13:45",
+        "isOpen": true,
+        "isChecked": false
+    },
+    {
+        "_id": "5",
+        "name": "Eve Davis",
+        "email": "eve.davis@example.com",
+        "subject": "Weekly Newsletter",
+        "status": "Scheduled",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "08:30",
+        "isOpen": false,
+        "isChecked": false
+    },
+    {
+        "_id": "6",
+        "name": "Frank Miller",
+        "email": "frank.miller@example.com",
+        "subject": "Password Reset Instructions",
+        "status": "Sent",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "14:00",
+        "isOpen": true,
+        "isChecked": true
+    },
+    {
+        "_id": "7",
+        "name": "Grace Wilson",
+        "email": "grace.wilson@example.com",
+        "subject": "Thank You for Your Purchase",
+        "status": "Failed",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "15:30",
+        "isOpen": false ,
+        "isChecked": false  
+    },
+    {
+        "_id": "8",
+        "name": "Hank Moore",
+        "email": "hank.moore@example.com",
+        "subject": "Survey Invitation",
+        "status": "Scheduled",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "16:45",
+        "isOpen": false,
+        "isChecked": false
+    },
+    {
+        "_id": "9",
+        "name": "Ivy Taylor",
+        "email": "ivy.taylor@example.com",
+        "subject": "Account Verification",
+        "status": "Sent",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "17:30",
+        "isOpen": true,
+        "isChecked": true
+    },
+    {
+        "_id": "10",
+        "name": "Jack Anderson",
+        "email": "jack.anderson@example.com",
+        "subject": "Your Subscription Details",
+        "status": "Sent",
+        "sendingDate": "2024-07-12",
+        "sendingTime": "18:00",
+        "isOpen": true,
+        "isChecked": true
+    }
+]
