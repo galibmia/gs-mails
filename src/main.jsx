@@ -63,7 +63,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'groups/update-groups/:id',
-        element: <UpdateGroups></UpdateGroups>
+        element: <UpdateGroups></UpdateGroups>,
+        loader: ({params}) => fetch(`http://localhost:5000/groups/${params.id}`)
       },
       // Contacts Routes
       {

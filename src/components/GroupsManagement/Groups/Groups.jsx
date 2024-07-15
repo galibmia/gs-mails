@@ -64,7 +64,7 @@ const Groups = () => {
 
     const handleDeleteGroup = (id) => {
         Swal.fire({
-            title: `Are you sure to delete id ${id}?`,
+            title: `Are you sure to delete the group?`,
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
@@ -73,11 +73,26 @@ const Groups = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                fetch(`http://localhost:5000/groups/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.deletedCount>0){
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                        const remaining = groups.filter(group => group._id !== id)
+                            console.log(remaining)
+                            setGroups(remaining);
+                            setFilteredGroups(remaining);
+                    }
+                })
+                
+                
+                
             }
         });
     }

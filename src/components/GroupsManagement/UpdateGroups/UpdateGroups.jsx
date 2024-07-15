@@ -1,8 +1,12 @@
 import { Label, Select, TextInput } from 'flowbite-react';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UpdateGroups = () => {
+
+    const groupData = useLoaderData();
+    const { _id,  groupName, status } = groupData;
+    const navigate = useNavigate('');
 
     const handleUpdateGroup = (event) => {
         event.preventDefault();
@@ -15,7 +19,31 @@ const UpdateGroups = () => {
             groupName,
             status
         }
-        console.log(updatedGroup);
+
+        fetch(`http://localhost:5000/groups/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updatedGroup)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.modifiedCount>0){
+                Swal.fire({
+                    title: "Greet!",
+                    text: "User updated successfully",
+                    icon: "success"
+                });
+                setTimeout(() => {
+                    navigate('/groups');  
+                }, 1000); 
+            }
+        })
+
+
+        
 
 
     }
@@ -30,13 +58,13 @@ const UpdateGroups = () => {
                             <Label htmlFor="groupName">
                                     Name <span className="text-red-500">*</span>
                                 </Label>
-                            <TextInput id="groupName" type="text" name='groupName' required shadow />
+                            <TextInput id="groupName" type="text" name='groupName' defaultValue={groupName} required shadow />
                         </div>
                         <div className='w-1/2'>
                             <Label htmlFor="status">
                                 Status
                             </Label>
-                            <Select id="status" name='status' required>
+                            <Select id="status" name='status' defaultValue={status} required>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
                             </Select>
