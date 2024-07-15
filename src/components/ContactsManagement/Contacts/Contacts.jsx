@@ -15,10 +15,10 @@ const Contacts = () => {
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(8);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
 
     useEffect(() => {
-        fetch('/user.json')
+        fetch('http://localhost:5000/contacts')
             .then(res => res.json())
             .then(data => {
                 setContacts(data);
@@ -67,7 +67,7 @@ const Contacts = () => {
 
     const handleDeleteContact = (id) => {
         Swal.fire({
-            title: `Are you sure to delete id ${id}?`,
+            title: `Are you sure to delete the contact?`,
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
@@ -76,18 +76,28 @@ const Contacts = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                fetch(`http://localhost:5000/contacts/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if(data.deletedCount>0){
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Contact has been deleted.",
+                                icon: "success"
+                            });
+                            const remaining = contacts.filter(contact => contact._id !== id)
+                            setContacts(remaining);
+                            setFilteredContacts(remaining);
+                        }
+                        
+                    })
             }
         });
     };
 
-    const onPageChange = (page) => {
-        setCurrentPage(page);
-    };
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const selectedItems = filteredContacts.slice(startIndex, startIndex + itemsPerPage);
@@ -150,9 +160,9 @@ const Contacts = () => {
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {selectedItems.map(contact => (
+                        {selectedItems.map((contact, index) => (
                             <Table.Row key={contact._id} className="bg-white border">
-                                <Table.Cell>{contact._id}</Table.Cell>
+                                <Table.Cell>{index + 1}</Table.Cell>
                                 <Table.Cell>{contact.name}</Table.Cell>
                                 <Table.Cell>{contact.email}</Table.Cell>
                                 <Table.Cell>{contact.phone}</Table.Cell>

@@ -70,8 +70,6 @@ const User = () => {
     };
 
     const handleDeleteUser = (id) => {
-
-
         Swal.fire({
             title: 'Are you sure to delete?',
             text: "You won't be able to revert this!",

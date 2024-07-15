@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CreateContacts = () => {
     const [countries, setCountries] = useState([]);
     const [groups, setGroups] = useState([]);
+    const navigate = useNavigate('');
 
     useEffect(() => {
         fetch('https://restcountries.com/v3.1/all')
@@ -21,7 +23,7 @@ const CreateContacts = () => {
     }, []);
 
     useEffect(() => {
-        fetch('/groups.json')
+        fetch('http://localhost:5000/groups')
             .then(res => res.json())
             .then(data => {
                 setGroups(data);
@@ -43,7 +45,7 @@ const CreateContacts = () => {
         const status = form.status.value;
         const about = form.about.value;
 
-        const user = {
+        const contact = {
             name,
             email,
             phone,
@@ -53,7 +55,27 @@ const CreateContacts = () => {
             status,
             about
         }
-        console.log(user);
+        fetch('http://localhost:5000/contacts', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(contact)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: "Greet!",
+                        text: "Contact created successfully",
+                        icon: "success"
+                    });
+                    setTimeout(() => {
+                        navigate('/contacts');
+                    }, 1000);
+                }
+            })
+            .catch(err => console.error('Error:', err));
     }
 
     return (
@@ -122,8 +144,8 @@ const CreateContacts = () => {
                                 <option disabled selected>Please Select</option>
                                 {
                                     groups.map((group, index) => (
-                                        <option key={index} value={group.name}>
-                                            {group.name}
+                                        <option key={index} value={group.groupName}>
+                                            {group.groupName}
                                         </option>
                                     ))
                                 }
