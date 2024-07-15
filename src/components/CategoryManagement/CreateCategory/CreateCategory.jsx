@@ -1,9 +1,10 @@
 import { Label, Select, TextInput } from 'flowbite-react';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CreateCategory = () => {
-
+    const navigate = useNavigate('')
     const handleCreateCategory = (event) => {
         event.preventDefault();
 
@@ -15,7 +16,27 @@ const CreateCategory = () => {
             categoryName,
             status
         }
-        console.log(newCategory);
+        fetch('http://localhost:5000/categories', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newCategory)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: "Greet!",
+                        text: "User created successfully",
+                        icon: "success"
+                    });
+                    setTimeout(() => {
+                        navigate('/categories');
+                    }, 1000);
+                }
+            })
+            .catch(err => console.error('Error:', err));
 
 
     }
@@ -28,15 +49,15 @@ const CreateCategory = () => {
 
                         <div className='w-1/2'>
                             <Label htmlFor="categoryName">
-                                    Name <span className="text-red-500">*</span>
-                                </Label>
+                                Name <span className="text-red-500">*</span>
+                            </Label>
                             <TextInput id="categoryName" type="text" name='categoryName' required shadow />
                         </div>
                         <div className='w-1/2'>
                             <Label htmlFor="status">
                                 Status
                             </Label>
-                            <Select id="status"  name='status' required>
+                            <Select id="status" name='status' required>
                                 <option disabled selected>Please Select</option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>

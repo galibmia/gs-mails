@@ -14,17 +14,15 @@ const Categories = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
-
-    // Pagination item
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8; // Set the number of content show per page
+    const [itemsPerPage, setItemsPerPage] = useState(10)
 
     useEffect(() => {
-        fetch('/categories.json')
+        fetch('http://localhost:5000/categories')
             .then(res => res.json())
             .then(data => {
                 setCategories(data);
-                setFilteredCategories(data); // Initially set filteredgroups to all groups
+                setFilteredCategories(data);
             })
     }, []);
 
@@ -87,10 +85,6 @@ const Categories = () => {
         });
     }
 
-    // Pagination
-    const onPageChange = (page) => {
-        setCurrentPage(page);
-    };
     const startIndex = (currentPage - 1) * itemsPerPage;
     const selectedItems = filteredCategories.slice(startIndex, startIndex + itemsPerPage);
 
@@ -150,10 +144,10 @@ const Categories = () => {
                         <Table.HeadCell ></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y text-center">
-                        {selectedItems.map(category => (
+                        {selectedItems.map((category, index) => (
                             <Table.Row key={category.category_id} className="bg-white">
-                                <Table.Cell >{category.category_id}</Table.Cell>
-                                <Table.Cell >{category.name}</Table.Cell>
+                                <Table.Cell >{index + 1}</Table.Cell>
+                                <Table.Cell >{category.categoryName}</Table.Cell>
                                 <Table.Cell className={`status-cell ${getStatusColor(category.status)}`}>
                                     {category.status}
                                 </Table.Cell>
@@ -172,13 +166,21 @@ const Categories = () => {
                     </Table.Body>
                 </Table>
             </div>
-            <div>
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={Math.ceil(filteredCategories.length / itemsPerPage)}
-                    onPageChange={onPageChange}
-                    showIcons
-                />
+            <div className="flex gap-96 items-center border p-4 rounded-md">
+                <span>Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredCategories.length)} of {filteredCategories.length} results</span>
+                <div className="flex items-center">
+                    <span className='border rounded p-1 text-gray-400'>Per page: </span>
+                    <select
+                        value={itemsPerPage}
+                        onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                        className="border rounded p-1"
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                    </select>
+                </div>
             </div>
         </div>
     );
