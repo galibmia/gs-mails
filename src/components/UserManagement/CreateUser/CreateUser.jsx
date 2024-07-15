@@ -37,14 +37,7 @@ const CreateUser = () => {
         const about = form.about.value;
 
         const user = {
-            name,
-            email,
-            phone,
-            password,
-            gender,
-            country,
-            status,
-            about
+            name, email, phone, password, gender, country, status, about
         }
 
         fetch('http://localhost:5000/users', {
