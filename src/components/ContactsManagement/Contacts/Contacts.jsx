@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pagination, Select, Table } from "flowbite-react";
+import { Table } from "flowbite-react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
@@ -14,17 +14,16 @@ const Contacts = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
-    // Pagination item
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8; // Set the number of content show per page
+    const [itemsPerPage, setItemsPerPage] = useState(8);
 
     useEffect(() => {
         fetch('/user.json')
             .then(res => res.json())
             .then(data => {
                 setContacts(data);
-                setFilteredContacts(data); // Initially set filteredUsers to all users
-            })
+                setFilteredContacts(data);
+            });
     }, []);
 
     const onFilterChange = (newStatus) => {
@@ -37,7 +36,6 @@ const Contacts = () => {
         if (status !== 'All') {
             filtered = filtered.filter(contact => contact.status === status);
         }
-        // Check the search item and match
         if (searchTerm) {
             filtered = filtered.filter(contact =>
                 contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -46,7 +44,7 @@ const Contacts = () => {
             );
         }
         setFilteredContacts(filtered);
-        setCurrentPage(1); // Reset to the first page after filtering
+        setCurrentPage(1);
     };
 
     const handleSearchChange = (event) => {
@@ -55,8 +53,6 @@ const Contacts = () => {
         filterContacts(status, value);
     };
 
-
-    // Get status color and change
     const getStatusColor = (status) => {
         return status === 'Active' ? 'text-green-500' : 'text-red-500';
     };
@@ -89,7 +85,6 @@ const Contacts = () => {
         });
     };
 
-    // Pagination
     const onPageChange = (page) => {
         setCurrentPage(page);
     };
@@ -179,13 +174,21 @@ const Contacts = () => {
                     </Table.Body>
                 </Table>
             </div>
-            <div>
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={Math.ceil(filteredContacts.length / itemsPerPage)}
-                    onPageChange={onPageChange}
-                    showIcons
-                />
+            <div className="flex gap-96 items-center border p-4 rounded-md">
+                <span>Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredContacts.length)} of {filteredContacts.length} results</span>
+                <div className="flex items-center">
+                    <span className='border rounded p-1 text-gray-400'>Per page: </span>
+                    <select
+                        value={itemsPerPage}
+                        onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                        className="border rounded p-1"
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                    </select>
+                </div>
             </div>
         </div>
     );

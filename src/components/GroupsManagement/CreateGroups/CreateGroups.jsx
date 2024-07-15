@@ -1,9 +1,10 @@
 import { Label, Select, TextInput } from 'flowbite-react';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CreateGroups = () => {
 
+    const navigate = useNavigate('')
     const handleCreateGroup = (event) => {
         event.preventDefault();
 
@@ -15,8 +16,28 @@ const CreateGroups = () => {
             groupName,
             status
         }
-        console.log(newGroup);
-
+        
+        fetch('http://localhost:5000/groups', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newGroup)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: "Greet!",
+                        text: "User created successfully",
+                        icon: "success"
+                    });
+                    setTimeout(() => {
+                        navigate('/groups');  
+                    }, 1000);  
+                }
+            })
+            .catch(err => console.error('Error:', err));
 
     }
     return (

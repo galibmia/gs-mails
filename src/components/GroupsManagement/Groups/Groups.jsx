@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pagination, Select, Table } from "flowbite-react";
+import { Table } from "flowbite-react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
@@ -14,16 +14,15 @@ const Groups = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
-    // Pagination item
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; // Set the number of content show per page
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
     useEffect(() => {
-        fetch('/groups.json')
+        fetch('http://localhost:5000/groups')
             .then(res => res.json())
             .then(data => {
                 setGroups(data);
-                setFilteredGroups(data); // Initially set filteredgroups to all groups
+                setFilteredGroups(data);
             })
     }, []);
 
@@ -37,7 +36,6 @@ const Groups = () => {
         if (status !== 'All') {
             filtered = filtered.filter(group => group.status === status);
         }
-        // Check the search item and match
         if (searchTerm) {
             filtered = filtered.filter(group =>
                 group.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -52,8 +50,6 @@ const Groups = () => {
         filterGroups(status, value);
     };
 
-
-    // Get status color and change
     const getStatusColor = (status) => {
         return status === 'Active' ? 'text-green-500' : 'text-red-500';
     };
@@ -86,10 +82,6 @@ const Groups = () => {
         });
     }
 
-    // Pagination
-    const onPageChange = (page) => {
-        setCurrentPage(page);
-    };
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const selectedItems = filteredGroups.slice(startIndex, startIndex + itemsPerPage);
@@ -151,10 +143,10 @@ const Groups = () => {
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {selectedItems.map(group => (
+                        {selectedItems.map((group, index) => (
                             <Table.Row key={group._id} className="bg-white">
-                                <Table.Cell>{group._id}</Table.Cell>
-                                <Table.Cell>{group.name}</Table.Cell>
+                                <Table.Cell>{index + 1}</Table.Cell>
+                                <Table.Cell>{group.groupName}</Table.Cell>
                                 <Table.Cell>10</Table.Cell>
                                 <Table.Cell className={`status-cell ${getStatusColor(group.status)}`}>
                                     {group.status}
@@ -174,13 +166,21 @@ const Groups = () => {
                     </Table.Body>
                 </Table>
             </div>
-            <div>
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={Math.ceil(filteredGroups.length / itemsPerPage)}
-                    onPageChange={onPageChange}
-                    showIcons
-                />
+            <div className="flex gap-96 items-center border p-4 rounded-md">
+                <span>Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredGroups.length)} of {filteredGroups.length} results</span>
+                <div className="flex items-center">
+                    <span className='border rounded p-1 text-gray-400'>Per page: </span>
+                    <select
+                        value={itemsPerPage}
+                        onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                        className="border rounded p-1"
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                    </select>
+                </div>
             </div>
         </div>
     );
