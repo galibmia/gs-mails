@@ -49,7 +49,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'users/update-user/:id',
-        element: <UpdateUser></UpdateUser>
+        element: <UpdateUser></UpdateUser>,
+        loader: ({params}) => fetch(`http://localhost:5000/users/${params.id}`)
       },
       // Groups Routes
       {
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
         path: 'groups/update-groups/:id',
         element: <UpdateGroups></UpdateGroups>
       },
-      // COntacts Routes
+      // Contacts Routes
       {
         path: 'contacts',
         element: <Contacts></Contacts>

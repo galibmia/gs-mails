@@ -20,7 +20,7 @@ const User = () => {
     const itemsPerPage = 8; // Set the number of content show per page
 
     useEffect(() => {
-        fetch('/user.json')
+        fetch('http://localhost:5000/users')
             .then(res => res.json())
             .then(data => {
                 setUsers(data);
@@ -70,8 +70,10 @@ const User = () => {
     };
 
     const handleDeleteUser = (id) => {
+
+
         Swal.fire({
-            title: `Are you sure to delete id ${id}?`,
+            title: 'Are you sure to delete?',
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
@@ -80,11 +82,26 @@ const User = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                fetch(`http://localhost:5000/users/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if(data.deletedCount>0){
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "User has been deleted.",
+                                icon: "success"
+                            });
+                            const remaining = users.filter(user => user._id !== id)
+                            console.log(remaining)
+                            setUsers(remaining);
+                            setFilteredUsers(remaining);
+                        }
+                        
+                    })
+
             }
         });
     }
@@ -156,9 +173,9 @@ const User = () => {
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {selectedItems.map(user => (
+                        {selectedItems.map((user, index) => (
                             <Table.Row key={user._id} className="bg-white">
-                                <Table.Cell>{user._id}</Table.Cell>
+                                <Table.Cell>{index + 1}</Table.Cell>
                                 <Table.Cell>{user.name}</Table.Cell>
                                 <Table.Cell>{user.email}</Table.Cell>
                                 <Table.Cell>{user.phone}</Table.Cell>

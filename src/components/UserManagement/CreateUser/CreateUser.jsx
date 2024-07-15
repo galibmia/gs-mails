@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CreateUser = () => {
     const [countries, setCountries] = useState([]);
+    const navigate = useNavigate('');
 
     useEffect(() => {
         fetch('https://restcountries.com/v3.1/all')
@@ -44,7 +46,28 @@ const CreateUser = () => {
             status,
             about
         }
-        console.log(user);
+
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: "Greet!",
+                        text: "User created successfully",
+                        icon: "success"
+                    });
+                    setTimeout(() => {
+                        navigate('/users');  
+                    }, 1000);  
+                }
+            })
+            .catch(err => console.error('Error:', err));
     }
 
     return (
@@ -129,8 +152,8 @@ const CreateUser = () => {
                             </Label>
                             <Select id="status" name='status' required>
                                 <option disabled selected>Please Select</option>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
                             </Select>
                         </div>
                     </div>
