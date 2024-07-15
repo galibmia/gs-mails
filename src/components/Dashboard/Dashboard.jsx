@@ -111,8 +111,9 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <div className='flex mt-10'>
-                <div className='w-[50%]'>
+            <div className='flex gap-5 mt-10'>
+                <div className='w-[50%] border rounded-md p-3 shadow-md'>
+                    <h2 className='text-xl font-bold'>Email logs Overview</h2>
                     <ResponsiveContainer width="100%" height={600}>
                         <PieChart>
                             <Pie
@@ -134,7 +135,8 @@ const Dashboard = () => {
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
-                <div className='w-[50%]'>
+                <div className='w-[50%] border rounded-md p-3 shadow-md'>
+                <h2 className='text-xl font-bold'>Email logs Analytics</h2>
                     <ResponsiveContainer width="100%" height={600}>
                         <PieChart>
                             <Pie
@@ -157,7 +159,9 @@ const Dashboard = () => {
                     </ResponsiveContainer>
                 </div>
             </div>
+            <div className='mt-20 border rounded-r-md shadow-md'>
             <Logs></Logs>
+            </div>
         </div>
     );
 };
