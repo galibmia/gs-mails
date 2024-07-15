@@ -15,10 +15,10 @@
         "name": "Bob Smith",
         "email": "bob.smith@example.com",
         "subject": "Your Order Confirmation",
-        "status": "Failed",
+        "status": "Sent",
         "sendingDate": "2024-07-12",
         "sendingTime": "10:00",
-        "isOpen": false,
+        "isOpen": true,
         "isChecked": false
     },
     {
@@ -48,7 +48,7 @@
         "name": "Eve Davis",
         "email": "eve.davis@example.com",
         "subject": "Weekly Newsletter",
-        "status": "Scheduled",
+        "status": "Failed",
         "sendingDate": "2024-07-12",
         "sendingTime": "08:30",
         "isOpen": false,

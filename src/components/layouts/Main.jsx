@@ -5,12 +5,17 @@ import { Outlet } from 'react-router-dom';
 const Main = () => {
     return (
         <div className="h-screen flex flex-col">
-            <div className='border'><NavBarItem /></div>
-            <div className="flex flex-1 gap-8">
-                <div className="w-72 border border-t-0 rounded-sm"> {/* Adjust the width of the sidebar as needed */}
+            {/* Fixed Navbar */}
+            <div className="fixed top-0 left-0 right-0 z-10 border bg-white">
+                <NavBarItem />
+            </div>
+            <div className="flex flex-1 pt-16"> {/* Adjusted padding-top to account for fixed navbar */}
+                {/* Fixed Sidebar */}
+                <div className="w-72 border-t border-l border-b border-r h-screen fixed top-16 left-0 z-10 bg-white"> {/* Fixed sidebar */}
                     <Sidebar />
                 </div>
-                <div className="flex-1">
+                {/* Main Content */}
+                <div className="flex-1 overflow-y-auto ml-72 p-4">
                     <Outlet />
                 </div>
             </div>
