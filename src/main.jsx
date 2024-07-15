@@ -77,7 +77,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'contacts/update-contacts/:id',
-        element: <UpdateContact></UpdateContact>
+        element: <UpdateContact></UpdateContact>,
+        loader: ({params}) => fetch(`http://localhost:5000/contacts/${params.id}`)
       },
       // Categories Routes
       {

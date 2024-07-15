@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UpdateContact = () => {
     const [countries, setCountries] = useState([]);
     const [groups, setGroups] = useState([]);
+    const navigate = useNavigate('');
+    const loadedContacts = useLoaderData();
+    
+    const {_id,  name, email, phone, gender, country, group, status, about } = loadedContacts;
 
     useEffect(() => {
         fetch('https://restcountries.com/v3.1/all')
@@ -43,7 +48,7 @@ const UpdateContact = () => {
         const status = form.status.value;
         const about = form.about.value;
 
-        const user = {
+        const updatedContact = {
             name,
             email,
             phone,
@@ -53,7 +58,27 @@ const UpdateContact = () => {
             status,
             about
         }
-        console.log(user);
+        fetch(`http://localhost:5000/contacts/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updatedContact)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    Swal.fire({
+                        title: "Greet!",
+                        text: "Contact updated successfully",
+                        icon: "success"
+                    });
+                    setTimeout(() => {
+                        navigate('/contacts');
+                    }, 1000);
+                }
+            })
     }
 
 
@@ -69,7 +94,7 @@ const UpdateContact = () => {
                                     Name <span className="text-red-500">*</span>
                                 </Label>
                             </div>
-                            <TextInput id="name" type="text" name='displayName' required shadow />
+                            <TextInput id="name" type="text" name='displayName' defaultValue={name} required shadow />
                         </div>
                         <div>
                             <div className="mb-2 block">
@@ -77,7 +102,7 @@ const UpdateContact = () => {
                                     Email <span className="text-red-500">*</span>
                                 </Label>
                             </div>
-                            <TextInput id="email2" type="email" name='email' required shadow />
+                            <TextInput id="email2" type="email" name='email' defaultValue={email} required shadow />
                         </div>
                         <div>
                             <div className="mb-2 block">
@@ -85,7 +110,7 @@ const UpdateContact = () => {
                                     Phone <span className="text-red-500">*</span>
                                 </Label>
                             </div>
-                            <TextInput id="phone" type="text" name='phone' required shadow />
+                            <TextInput id="phone" type="text" name='phone' defaultValue={phone} required shadow />
                         </div>
                         <div className="flex items-center gap-2">
                             <div>
@@ -93,7 +118,7 @@ const UpdateContact = () => {
                                     Country
                                 </Label>
                                 <Select id="countries" name='country' required>
-                                    <option disabled selected>Select Country</option>
+                                    <option selected>{country}</option>
                                     {
                                         countries.map((country, index) => (
                                             <option key={index} value={country.name.common}>
@@ -107,7 +132,7 @@ const UpdateContact = () => {
                                 <Label htmlFor="gender">
                                     Gender
                                 </Label>
-                                <Select id="gender" name='gender' required>
+                                <Select id="gender" name='gender' defaultValue={gender} required>
                                     <option disabled selected>Select Gender</option>
                                     <option value="male" >Male</option>
                                     <option value="female">Female</option>
@@ -120,7 +145,7 @@ const UpdateContact = () => {
                                 Group <span className="text-red-500">*</span>
                             </Label>
                             <Select id="group" name='group' required>
-                                <option disabled selected>Please Select</option>
+                                <option selected>{group}</option>
                                 {
                                     groups.map((group, index) => (
                                         <option key={index} value={group.name}>
@@ -138,13 +163,13 @@ const UpdateContact = () => {
                                     About
                                 </Label>
                             </div>
-                            <Textarea rows={8} className='' id="name" type="text" name='about' shadow />
+                            <Textarea rows={8} className='' id="name" type="text" name='about' defaultValue={about} shadow />
                         </div>
                         <div className='mt-8'>
                             <Label htmlFor="status">
                                 Status <span className="text-red-500">*</span>
                             </Label>
-                            <Select id="status" name='status' required>
+                            <Select id="status" name='status' defaultValue={status} required>
                                 <option disabled selected>Please Select</option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>

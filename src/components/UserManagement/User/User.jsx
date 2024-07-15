@@ -17,7 +17,7 @@ const User = () => {
     const [searchTerm, setSearchTerm] = useState('');
     // Pagination item
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8; // Set the number of content show per page
+    const [itemsPerPage, setItemsPerPage] = useState(10)
 
     useEffect(() => {
         fetch('http://localhost:5000/users')
@@ -105,11 +105,6 @@ const User = () => {
     }
 
 
-    // Pagination
-    const onPageChange = (page) => {
-        setCurrentPage(page);
-    };
-
     const startIndex = (currentPage - 1) * itemsPerPage;
     const selectedItems = filteredUsers.slice(startIndex, startIndex + itemsPerPage);
 
@@ -195,13 +190,21 @@ const User = () => {
                     </Table.Body>
                 </Table>
             </div>
-            <div>
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={Math.ceil(filteredUsers.length / itemsPerPage)}
-                    onPageChange={onPageChange}
-                    showIcons
-                />
+            <div className="flex gap-96 items-center border p-4 rounded-md">
+                <span>Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredUsers.length)} of {filteredUsers.length} results</span>
+                <div className="flex items-center">
+                    <span className='border rounded p-1 text-gray-400'>Per page: </span>
+                    <select
+                        value={itemsPerPage}
+                        onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                        className="border rounded p-1"
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                    </select>
+                </div>
             </div>
         </div>
     );
