@@ -67,7 +67,7 @@ const Categories = () => {
 
     const handleDeleteGroup = (id) => {
         Swal.fire({
-            title: `Are you sure to delete id ${id}?`,
+            title: `Are you sure to delete this category?`,
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
@@ -76,11 +76,25 @@ const Categories = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                fetch(`http://localhost:5000/categories/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Category has been deleted.",
+                                icon: "success"
+                            });
+                            const remaining = categories.filter(category => category._id !== id)
+                            console.log(remaining)
+                            setCategories(remaining);
+                            setFilteredCategories(remaining);
+                        }
+
+                    })
             }
         });
     }
@@ -152,11 +166,11 @@ const Categories = () => {
                                     {category.status}
                                 </Table.Cell>
                                 <Table.Cell className='flex items-center justify-center'>
-                                    <Link to={`/categories/update-categories/${category.category_id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
+                                    <Link to={`/categories/update-categories/${category._id}`} className="font-medium text-[#EA580C] hover:underline flex items-center">
                                         <FaRegEdit className="text-md" />
                                         <span className="ml-1 text-md">Edit</span>
                                     </Link>
-                                    <button onClick={() => handleDeleteGroup(category.category_id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
+                                    <button onClick={() => handleDeleteGroup(category._id)} className="font-medium text-red-700 hover:underline ml-5 flex items-center">
                                         <MdDelete className="text-md" />
                                         <span className="ml-1 text-md">Delete</span>
                                     </button>
@@ -179,6 +193,7 @@ const Categories = () => {
                         <option value={10}>10</option>
                         <option value={25}>25</option>
                         <option value={50}>50</option>
+                        <option value={categories.length}>All</option>
                     </select>
                 </div>
             </div>

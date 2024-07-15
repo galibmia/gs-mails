@@ -91,7 +91,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'categories/update-categories/:id',
-        element: <UpdateCategory></UpdateCategory>
+        element: <UpdateCategory></UpdateCategory>,
+        loader: ({params}) => fetch(`http://localhost:5000/categories/${params.id}`)
       },
       // Templates Routes
       {

@@ -1,9 +1,13 @@
 import { Label, Select, TextInput } from 'flowbite-react';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UpdateCategory = () => {
 
+    const categoriesData = useLoaderData();
+    const { _id,  categoryName, status } = categoriesData;
+    const navigate = useNavigate('');
+    
     const handleUpdateCategory = (event) => {
         event.preventDefault();
 
@@ -15,7 +19,28 @@ const UpdateCategory = () => {
             categoryName,
             status
         }
-        console.log(updatedCategory);
+
+        fetch(`http://localhost:5000/categories/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updatedCategory)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    Swal.fire({
+                        title: "Greet!",
+                        text: "Category updated successfully",
+                        icon: "success"
+                    });
+                    setTimeout(() => {
+                        navigate('/categories');
+                    }, 1000);
+                }
+            })
 
 
     }
@@ -28,15 +53,15 @@ const UpdateCategory = () => {
 
                         <div className='w-1/2'>
                             <Label htmlFor="categoryName">
-                                    Name <span className="text-red-500">*</span>
-                                </Label>
-                            <TextInput id="categoryName" type="text" name='categoryName' required shadow />
+                                Name <span className="text-red-500">*</span>
+                            </Label>
+                            <TextInput id="categoryName" type="text" name='categoryName' defaultValue={categoryName} required shadow />
                         </div>
                         <div className='w-1/2'>
                             <Label htmlFor="status">
                                 Status
                             </Label>
-                            <Select id="status" name='status' required>
+                            <Select id="status" name='status' defaultValue={status} required>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
                             </Select>
