@@ -15,13 +15,12 @@ const Templates = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
-    // Pagination item
-    const [currentPage, setCurrentPage] = useState(1); 
-    const itemsPerPage = 8; // Set the number of content show per page
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10)
 
     // get the data
     useEffect(() => {
-        fetch('/templates.json')
+        fetch('http://localhost:5000/templates')
             .then(res => res.json())
             .then(data => {
                 setTemplates(data);
@@ -70,7 +69,7 @@ const Templates = () => {
 
     const handleDeleteTemplates = (id) => {
         Swal.fire({
-            title: `Are you sure to delete id ${id}?`,
+            title: `Are you sure to delete this Template?`,
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
@@ -79,20 +78,28 @@ const Templates = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                fetch(`http://localhost:5000/templates/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Template has been deleted.",
+                                icon: "success"
+                            });
+                            const remaining = templates.filter(template => template._id !== id)
+                            setTemplates(remaining);
+                            setFilteredTemplates(remaining);
+                        }
+
+                    })
             }
         });
     };
 
-
-    // Pagination
-    const onPageChange = (page) => {
-        setCurrentPage(page);
-    };
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const selectedItems = filteredTemplates.slice(startIndex, startIndex + itemsPerPage);
@@ -154,9 +161,9 @@ const Templates = () => {
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {selectedItems.map(template => (
+                        {selectedItems.map((template, index) => (
                             <Table.Row key={template._id} className="bg-white">
-                                <Table.Cell>{template._id}</Table.Cell>
+                                <Table.Cell>{index + 1}</Table.Cell>
                                 <Table.Cell>{template.subject}</Table.Cell>
                                 <Table.Cell>{template.category}</Table.Cell>
                                 <Table.Cell className={`status-cell ${getStatusColor(template.status)}`}>
@@ -176,15 +183,24 @@ const Templates = () => {
                         ))}
                     </Table.Body>
                 </Table>
-                
+
             </div>
-            <div>
-            <Pagination
-                    currentPage={currentPage}
-                    totalPages={Math.ceil(filteredTemplates.length / itemsPerPage)}
-                    onPageChange={onPageChange}
-                    showIcons
-                />
+            <div className="flex gap-96 items-center border p-4 rounded-md">
+                <span>Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredTemplates.length)} of {filteredTemplates.length} results</span>
+                <div className="flex items-center">
+                    <span className='border rounded p-1 text-gray-400'>Per page: </span>
+                    <select
+                        value={itemsPerPage}
+                        onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                        className="border rounded p-1"
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                        <option value={templates.length}>All</option>
+                    </select>
+                </div>
             </div>
         </div>
     );

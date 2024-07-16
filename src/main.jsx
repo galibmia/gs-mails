@@ -105,7 +105,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'templates/update-templates/:id',
-        element: <UpdateTemplates></UpdateTemplates>
+        element: <UpdateTemplates></UpdateTemplates>,
+        loader: ({params}) => fetch(`http://localhost:5000/templates/${params.id}`)
       },
       // Campaign Routes
       {

@@ -16,7 +16,7 @@ const CreateGroups = () => {
             groupName,
             status
         }
-        
+
         fetch('http://localhost:5000/groups', {
             method: 'POST',
             headers: {
@@ -33,8 +33,8 @@ const CreateGroups = () => {
                         icon: "success"
                     });
                     setTimeout(() => {
-                        navigate('/groups');  
-                    }, 1000);  
+                        navigate('/groups');
+                    }, 1000);
                 }
             })
             .catch(err => console.error('Error:', err));
@@ -49,15 +49,15 @@ const CreateGroups = () => {
 
                         <div className='w-1/2'>
                             <Label htmlFor="groupName">
-                                    Name <span className="text-red-500">*</span>
-                                </Label>
+                                Name <span className="text-red-500">*</span>
+                            </Label>
                             <TextInput id="groupName" type="text" name='groupName' required shadow />
                         </div>
                         <div className='w-1/2'>
                             <Label htmlFor="status">
                                 Status
                             </Label>
-                            <Select id="status"  name='status' required>
+                            <Select id="status" name='status' required>
                                 <option disabled selected>Please Select</option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
