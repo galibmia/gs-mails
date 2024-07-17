@@ -16,7 +16,7 @@ const Templates = () => {
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(10)
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
     // get the data
     useEffect(() => {

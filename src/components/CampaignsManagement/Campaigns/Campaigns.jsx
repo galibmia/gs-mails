@@ -9,21 +9,20 @@ import Swal from 'sweetalert2';
 
 const Campaigns = () => {
 
-    const [campaign, setCampaign] = useState([]);
-    const [filteredCampaign, setFilteredCampaign] = useState([]);
+    const [campaigns, setCampaigns] = useState([]);
+    const [filteredCampaigns, setFilteredCampaigns] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [status, setStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
-    // Pagination item
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8; // Set the number of content show per page
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
     useEffect(() => {
-        fetch('/campaign.json')
+        fetch('http://localhost:5000/campaigns')
             .then(res => res.json())
             .then(data => {
-                setCampaign(data);
-                setFilteredCampaign(data); // Initially set filteredUsers to all users
+                setCampaigns(data);
+                setFilteredCampaigns(data); // Initially set filteredUsers to all users
             })
     }, []);
 
@@ -33,7 +32,7 @@ const Campaigns = () => {
     };
 
     const filterCampaign = (status, searchTerm) => {
-        let filtered = campaign;
+        let filtered = campaigns;
         if (status !== 'All') {
             filtered = filtered.filter(campaign => campaign.status === status);
         }
@@ -45,7 +44,7 @@ const Campaigns = () => {
                 campaign.phone.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
-        setFilteredCampaign(filtered);
+        setFilteredCampaigns(filtered);
         setCurrentPage(1); // Reset to the first page after filtering
     };
 
@@ -71,7 +70,7 @@ const Campaigns = () => {
 
     const handleDeleteCampaign = (id) => {
         Swal.fire({
-            title: `Are you sure to delete id ${id}?`,
+            title: `Are you sure to delete the campaign?`,
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
@@ -80,22 +79,30 @@ const Campaigns = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                fetch(`http://localhost:5000/campaigns/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Campaign has been deleted.",
+                                icon: "success"
+                            });
+                            const remaining = campaigns.filter(campaign => campaign._id !== id)
+                            setCampaigns(remaining);
+                            setFilteredCampaigns(remaining);
+                        }
+
+                    })
             }
         });
     };
 
-    // Pagination
-    const onPageChange = (page) => {
-        setCurrentPage(page);
-    };
-
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const selectedItems = filteredCampaign.slice(startIndex, startIndex + itemsPerPage);
+    const selectedItems = filteredCampaigns.slice(startIndex, startIndex + itemsPerPage);
 
     return (
         <div className='p-4'>
@@ -156,13 +163,13 @@ const Campaigns = () => {
                         <Table.HeadCell></Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {selectedItems.map(campaign => (
+                        {selectedItems.map((campaign, index) => (
                             <Table.Row key={campaign._id} className="bg-white">
-                                <Table.Cell>{campaign._id}</Table.Cell>
+                                <Table.Cell>{index + 1}</Table.Cell>
                                 <Table.Cell>{campaign.name}</Table.Cell>
-                                <Table.Cell>{campaign.group}</Table.Cell>
+                                <Table.Cell>{campaign.groupName}</Table.Cell>
                                 <Table.Cell>{campaign.template}</Table.Cell>
-                                <Table.Cell>{campaign.date}, {campaign.sending_time}</Table.Cell>
+                                <Table.Cell>{campaign.sendingDate}, {campaign.time}</Table.Cell>
                                 <Table.Cell className={`status-cell ${getStatusColor(campaign.status)}`}>
                                     {campaign.status}
                                 </Table.Cell>
@@ -181,13 +188,22 @@ const Campaigns = () => {
                     </Table.Body>
                 </Table>
             </div>
-            <div>
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={Math.ceil(filteredCampaign.length / itemsPerPage)}
-                    onPageChange={onPageChange}
-                    showIcons
-                />
+            <div className="flex gap-96 items-center border p-4 rounded-md">
+                <span>Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredCampaigns.length)} of {filteredCampaigns.length} results</span>
+                <div className="flex items-center">
+                    <span className='border rounded p-1 text-gray-400'>Per page: </span>
+                    <select
+                        value={itemsPerPage}
+                        onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                        className="border rounded p-1"
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                        <option value={campaigns.length}>All</option>
+                    </select>
+                </div>
             </div>
         </div>
     );

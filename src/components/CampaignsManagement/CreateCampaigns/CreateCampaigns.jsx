@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from 'sweetalert2';
 
 const CreateCampaigns = () => {
     const [groups, setGroups] = useState([]);
@@ -12,9 +13,10 @@ const CreateCampaigns = () => {
     const [hours, setHours] = useState('03');
     const [minutes, setMinutes] = useState('03');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const navigate = useNavigate('');
 
     useEffect(() => {
-        fetch('/groups.json')
+        fetch('http://localhost:5000/groups')
             .then(res => res.json())
             .then(data => {
                 setGroups(data);
@@ -22,7 +24,7 @@ const CreateCampaigns = () => {
     }, []);
 
     useEffect(() => {
-        fetch('/templates.json')
+        fetch('http://localhost:5000/templates')
             .then(res => res.json())
             .then(data => {
                 setTemplates(data);
@@ -44,25 +46,46 @@ const CreateCampaigns = () => {
         const form = event.target;
 
         const name = form.displayName.value;
-        const group = form.group.value;
+        const groupName = form.groupName.value;
         const template = form.template.value;
         const status = form.status.value;
 
-        const campaign = {
+        const newCampaign = {
             name,
-            group,
+            groupName,
             template,
             sendingDate: sendingDate ? sendingDate.toISOString().split('T')[0] : '',
             time,
             status
         }
-        console.log(campaign);
+        
+        fetch('http://localhost:5000/campaigns', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newCampaign)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: "Greet!",
+                        text: "Campaign created successfully",
+                        icon: "success"
+                    });
+                    setTimeout(() => {
+                        navigate('/campaigns');
+                    }, 1000);
+                }
+            })
+            .catch(err => console.error('Error:', err));
     }
 
     return (
         <div>
             <form onSubmit={handleCreateCampaign} className="w-full">
-                <h1 className='text-4xl font-semibold my-5'>Create Email Contact</h1>
+                <h1 className='text-4xl font-semibold my-5'>Create Email Campaign</h1>
                 <div className='flex gap-8'>
                     <div className='flex flex-col gap-4 w-[60%] border p-4'>
                         <div>
@@ -77,11 +100,11 @@ const CreateCampaigns = () => {
                             <Label htmlFor="group">
                                 Group <span className="text-red-500">*</span>
                             </Label>
-                            <Select id="group" name='group' required>
+                            <Select id="group" name='groupName' required>
                                 <option disabled selected>Please Select</option>
                                 {groups.map((group, index) => (
-                                    <option key={index} value={group.name}>
-                                        {group.name}
+                                    <option key={index} value={group.groupName}>
+                                        {group.groupName}
                                     </option>
                                 ))}
                             </Select>

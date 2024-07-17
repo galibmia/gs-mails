@@ -119,7 +119,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'campaigns/update-campaigns/:id',
-        element: <UpdateCampaigns></UpdateCampaigns>
+        element: <UpdateCampaigns></UpdateCampaigns>,
+        loader: ({params}) => fetch(`http://localhost:5000/campaigns/${params.id}`)
       },
       // Logs Routes
       {
