@@ -2,9 +2,10 @@ import { Label, Select, Textarea, TextInput } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const UpdateTemplates = () => {
-
+    useTitle('Update Template');
     const loadedTemplate = useLoaderData();
 
     const { _id, subject, body, category, status } = loadedTemplate;

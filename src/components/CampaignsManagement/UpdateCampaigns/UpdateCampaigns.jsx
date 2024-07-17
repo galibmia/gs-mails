@@ -4,8 +4,12 @@ import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const UpdateCampaigns = () => {
+
+    useTitle('Update Campaign')
+    
     const loadedCampaigns = useLoaderData();
     const { _id, name, groupName, template, status } = loadedCampaigns
 

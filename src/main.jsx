@@ -28,11 +28,14 @@ import CreateCampaigns from './components/CampaignsManagement/CreateCampaigns/Cr
 import UpdateCampaigns from './components/CampaignsManagement/UpdateCampaigns/UpdateCampaigns';
 import Logs from './components/Logs/Logs';
 import Settings from './components/Settings/Settings';
+import PrivateRoutes from './components/PrivateRoutes/PrivateRoutes';
+import AuthProvider from './components/AuthProvider/AuthProvider';
+import Profile from './components/Profile/Profile';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main></Main>,
+    element: <PrivateRoutes><Main></Main></PrivateRoutes>,
     children: [
       {
         path: '/',
@@ -50,7 +53,7 @@ const router = createBrowserRouter([
       {
         path: 'users/update-user/:id',
         element: <UpdateUser></UpdateUser>,
-        loader: ({params}) => fetch(`http://localhost:5000/users/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/users/${params.id}`)
       },
       // Groups Routes
       {
@@ -64,7 +67,7 @@ const router = createBrowserRouter([
       {
         path: 'groups/update-groups/:id',
         element: <UpdateGroups></UpdateGroups>,
-        loader: ({params}) => fetch(`http://localhost:5000/groups/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/groups/${params.id}`)
       },
       // Contacts Routes
       {
@@ -78,7 +81,7 @@ const router = createBrowserRouter([
       {
         path: 'contacts/update-contacts/:id',
         element: <UpdateContact></UpdateContact>,
-        loader: ({params}) => fetch(`http://localhost:5000/contacts/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/contacts/${params.id}`)
       },
       // Categories Routes
       {
@@ -92,7 +95,7 @@ const router = createBrowserRouter([
       {
         path: 'categories/update-categories/:id',
         element: <UpdateCategory></UpdateCategory>,
-        loader: ({params}) => fetch(`http://localhost:5000/categories/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/categories/${params.id}`)
       },
       // Templates Routes
       {
@@ -106,7 +109,7 @@ const router = createBrowserRouter([
       {
         path: 'templates/update-templates/:id',
         element: <UpdateTemplates></UpdateTemplates>,
-        loader: ({params}) => fetch(`http://localhost:5000/templates/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/templates/${params.id}`)
       },
       // Campaign Routes
       {
@@ -120,7 +123,7 @@ const router = createBrowserRouter([
       {
         path: 'campaigns/update-campaigns/:id',
         element: <UpdateCampaigns></UpdateCampaigns>,
-        loader: ({params}) => fetch(`http://localhost:5000/campaigns/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/campaigns/${params.id}`)
       },
       // Logs Routes
       {
@@ -130,6 +133,10 @@ const router = createBrowserRouter([
       {
         path: 'settings',
         element: <Settings></Settings>
+      },
+      {
+        path: 'profile',
+        element: <Profile></Profile>
       },
     ]
   },
@@ -142,6 +149,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>,
 )
