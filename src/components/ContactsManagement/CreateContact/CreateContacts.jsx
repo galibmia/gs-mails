@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const CreateContacts = () => {
+    useTitle('Create Contact');
     const [countries, setCountries] = useState([]);
     const [groups, setGroups] = useState([]);
     const navigate = useNavigate('');
@@ -23,7 +25,7 @@ const CreateContacts = () => {
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:5000/groups')
+        fetch('https://gs-mails-server.onrender.com/groups')
             .then(res => res.json())
             .then(data => {
                 setGroups(data);
@@ -55,7 +57,7 @@ const CreateContacts = () => {
             status,
             about
         }
-        fetch('http://localhost:5000/contacts', {
+        fetch('https://gs-mails-server.onrender.com/contacts', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

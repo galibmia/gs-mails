@@ -9,7 +9,6 @@ import Main from './components/layouts/Main.jsx';
 import Dashboard from './components/Dashboard/Dashboard.jsx';
 import Login from './components/Login/Login.jsx';
 import CreateUser from './components/UserManagement/CreateUser/CreateUser.jsx';
-import User from './components/UserManagement/User/User.jsx';
 import UpdateUser from './components/UserManagement/UpdateUser/UpdateUser.jsx';
 import Groups from './components/GroupsManagement/Groups/Groups.jsx';
 import UpdateGroups from './components/GroupsManagement/UpdateGroups/UpdateGroups.jsx';
@@ -31,6 +30,7 @@ import Settings from './components/Settings/Settings';
 import PrivateRoutes from './components/PrivateRoutes/PrivateRoutes';
 import AuthProvider from './components/AuthProvider/AuthProvider';
 import Profile from './components/Profile/Profile';
+import Users from './components/UserManagement/Users/Users';
 
 const router = createBrowserRouter([
   {
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       // Users Routes
       {
         path: 'users',
-        element: <User></User>
+        element: <Users></Users>
       },
       {
         path: 'users/create-user',
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
       {
         path: 'users/update-user/:id',
         element: <UpdateUser></UpdateUser>,
-        loader: ({ params }) => fetch(`http://localhost:5000/users/${params.id}`)
+        loader: ({ params }) => fetch(`https://gs-mails-server.onrender.com/users/${params.id}`)
       },
       // Groups Routes
       {
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
       {
         path: 'groups/update-groups/:id',
         element: <UpdateGroups></UpdateGroups>,
-        loader: ({ params }) => fetch(`http://localhost:5000/groups/${params.id}`)
+        loader: ({ params }) => fetch(`https://gs-mails-server.onrender.com/groups/${params.id}`)
       },
       // Contacts Routes
       {
@@ -81,7 +81,7 @@ const router = createBrowserRouter([
       {
         path: 'contacts/update-contacts/:id',
         element: <UpdateContact></UpdateContact>,
-        loader: ({ params }) => fetch(`http://localhost:5000/contacts/${params.id}`)
+        loader: ({ params }) => fetch(`https://gs-mails-server.onrender.com/contacts/${params.id}`)
       },
       // Categories Routes
       {
@@ -95,7 +95,7 @@ const router = createBrowserRouter([
       {
         path: 'categories/update-categories/:id',
         element: <UpdateCategory></UpdateCategory>,
-        loader: ({ params }) => fetch(`http://localhost:5000/categories/${params.id}`)
+        loader: ({ params }) => fetch(`https://gs-mails-server.onrender.com/categories/${params.id}`)
       },
       // Templates Routes
       {
@@ -109,7 +109,7 @@ const router = createBrowserRouter([
       {
         path: 'templates/update-templates/:id',
         element: <UpdateTemplates></UpdateTemplates>,
-        loader: ({ params }) => fetch(`http://localhost:5000/templates/${params.id}`)
+        loader: ({ params }) => fetch(`https://gs-mails-server.onrender.com/templates/${params.id}`)
       },
       // Campaign Routes
       {
@@ -123,7 +123,7 @@ const router = createBrowserRouter([
       {
         path: 'campaigns/update-campaigns/:id',
         element: <UpdateCampaigns></UpdateCampaigns>,
-        loader: ({ params }) => fetch(`http://localhost:5000/campaigns/${params.id}`)
+        loader: ({ params }) => fetch(`https://gs-mails-server.onrender.com/campaigns/${params.id}`)
       },
       // Logs Routes
       {

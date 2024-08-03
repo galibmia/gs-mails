@@ -1,9 +1,11 @@
 import { Label, Select, TextInput } from 'flowbite-react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const UpdateGroups = () => {
 
+    useTitle('Update Group');
     const groupData = useLoaderData();
     const { _id,  groupName, status } = groupData;
     const navigate = useNavigate('');
@@ -20,7 +22,7 @@ const UpdateGroups = () => {
             status
         }
 
-        fetch(`http://localhost:5000/groups/${_id}`, {
+        fetch(`https://gs-mails-server.onrender.com/groups/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const CreateUser = () => {
+    useTitle('Create User');
     const [countries, setCountries] = useState([]);
     const navigate = useNavigate('');
 
@@ -40,7 +42,7 @@ const CreateUser = () => {
             name, email, phone, password, gender, country, status, about
         }
 
-        fetch('http://localhost:5000/users', {
+        fetch('https://gs-mails-server.onrender.com/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

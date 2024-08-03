@@ -2,15 +2,16 @@ import { Label, Select, Textarea, TextInput } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const CreateTemplates = () => {
-
+    useTitle('Create Template')
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate('');
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/categories')
+        fetch('https://gs-mails-server.onrender.com/categories')
             .then(res => res.json())
             .then(data => {
                 setCategories(data);
@@ -34,7 +35,7 @@ const CreateTemplates = () => {
             status
         }
         
-        fetch('http://localhost:5000/templates', {
+        fetch('https://gs-mails-server.onrender.com/templates', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

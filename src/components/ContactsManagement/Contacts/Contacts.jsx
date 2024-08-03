@@ -6,9 +6,11 @@ import { CiSearch } from "react-icons/ci";
 import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const Contacts = () => {
 
+    useTitle('Contacts');
     const [contacts, setContacts] = useState([]);
     const [filteredContacts, setFilteredContacts] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -18,7 +20,7 @@ const Contacts = () => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
 
     useEffect(() => {
-        fetch('http://localhost:5000/contacts')
+        fetch('https://gs-mails-server.onrender.com/contacts')
             .then(res => res.json())
             .then(data => {
                 setContacts(data);
@@ -76,7 +78,7 @@ const Contacts = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/contacts/${id}`, {
+                fetch(`https://gs-mails-server.onrender.com/contacts/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

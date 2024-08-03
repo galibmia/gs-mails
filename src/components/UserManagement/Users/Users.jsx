@@ -4,12 +4,13 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from 'react-icons/fa';
-import "./User.css"
+import "./Users.css"
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
-const User = () => {
-
+const Users = () => {
+    useTitle('Users')
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -20,7 +21,7 @@ const User = () => {
     const [itemsPerPage, setItemsPerPage] = useState(10)
 
     useEffect(() => {
-        fetch('http://localhost:5000/users')
+        fetch('https://gs-mails-server.onrender.com/users')
             .then(res => res.json())
             .then(data => {
                 setUsers(data);
@@ -80,7 +81,7 @@ const User = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/users/${id}`, {
+                fetch(`https://gs-mails-server.onrender.com/users/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -211,4 +212,4 @@ const User = () => {
     );
 };
 
-export default User;
+export default Users;

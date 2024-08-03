@@ -2,8 +2,11 @@ import { Label, Select, TextInput } from 'flowbite-react';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const CreateCategory = () => {
+    
+    useTitle('Create Category');
     const navigate = useNavigate('')
     const handleCreateCategory = (event) => {
         event.preventDefault();
@@ -16,7 +19,7 @@ const CreateCategory = () => {
             categoryName,
             status
         }
-        fetch('http://localhost:5000/categories', {
+        fetch('https://gs-mails-server.onrender.com/categories', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

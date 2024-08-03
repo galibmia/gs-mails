@@ -1,9 +1,10 @@
 import { Label, Select, TextInput } from 'flowbite-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const CreateGroups = () => {
-
+    useTitle('Create Group');
     const navigate = useNavigate('')
     const handleCreateGroup = (event) => {
         event.preventDefault();
@@ -17,7 +18,7 @@ const CreateGroups = () => {
             status
         }
 
-        fetch('http://localhost:5000/groups', {
+        fetch('https://gs-mails-server.onrender.com/groups', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

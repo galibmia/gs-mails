@@ -14,7 +14,7 @@ const UpdateTemplates = () => {
     const navigate = useNavigate('');
 
     useEffect(() => {
-        fetch('http://localhost:5000/categories')
+        fetch('https://gs-mails-server.onrender.com/categories')
             .then(res => res.json())
             .then(data => {
                 setCategories(data);
@@ -37,7 +37,7 @@ const UpdateTemplates = () => {
             category,
             status
         }
-        fetch(`http://localhost:5000/templates/${_id}`, {
+        fetch(`https://gs-mails-server.onrender.com/templates/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

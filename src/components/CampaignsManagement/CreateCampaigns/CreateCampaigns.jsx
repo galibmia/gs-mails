@@ -4,8 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const CreateCampaigns = () => {
+    useTitle('Create Campaign');
     const [groups, setGroups] = useState([]);
     const [templates, setTemplates] = useState([]);
     const [sendingDate, setSendingDate] = useState(null);
@@ -16,7 +18,7 @@ const CreateCampaigns = () => {
     const navigate = useNavigate('');
 
     useEffect(() => {
-        fetch('http://localhost:5000/groups')
+        fetch('https://gs-mails-server.onrender.com/groups')
             .then(res => res.json())
             .then(data => {
                 setGroups(data);
@@ -24,7 +26,7 @@ const CreateCampaigns = () => {
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:5000/templates')
+        fetch('https://gs-mails-server.onrender.com/templates')
             .then(res => res.json())
             .then(data => {
                 setTemplates(data);
@@ -59,7 +61,7 @@ const CreateCampaigns = () => {
             status
         }
         
-        fetch('http://localhost:5000/campaigns', {
+        fetch('https://gs-mails-server.onrender.com/campaigns', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

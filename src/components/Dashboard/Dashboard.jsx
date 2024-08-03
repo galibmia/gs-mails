@@ -5,8 +5,11 @@ import blueImg from "../../assets/images/blue.png";
 import greenImg from "../../assets/images/green.png";
 import redImg from "../../assets/images/red.png";
 import Logs from '../Logs/Logs';
+import useTitle from '../../hooks/useTitle';
 
 const Dashboard = () => {
+    
+    useTitle('Dashboard');
     const [statusData, setStatusData] = useState([]);
     const [interactionData, setInteractionData] = useState([]);
     const [emailCounts, setEmailCounts] = useState({

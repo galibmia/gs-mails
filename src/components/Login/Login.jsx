@@ -18,7 +18,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:5000/users/')
+        fetch('https://gs-mails-server.onrender.com/users/')
             .then(res => res.json())
             .then(data => setUsersData(data))
             .catch(err => console.error('Error fetching users:', err));

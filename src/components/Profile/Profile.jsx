@@ -1,15 +1,14 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../AuthProvider/AuthProvider';
+import useTitle from '../../hooks/useTitle';
 
 const Profile = () => {
-
-    const { user, setLoading, loading } = useContext(AuthContext);
+    const { user, setLoading } = useContext(AuthContext);
+    useTitle(`${user?.name}`);
 
     if(user){
-        setLoading(false)
+        setLoading(false);
     }
-
-    console.log(loading);
     return (
         <div className='w-[30%] mx-auto border p-8 shadow-xl'>
             <div className='space-y-8 w-[80%] mx-auto'>

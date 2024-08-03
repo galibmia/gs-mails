@@ -6,8 +6,10 @@ import { CiSearch } from "react-icons/ci";
 import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const Templates = () => {
+    useTitle('Templates');
     const [templates, setTemplates] = useState([]);
 
     // Search and filter item
@@ -20,7 +22,7 @@ const Templates = () => {
 
     // get the data
     useEffect(() => {
-        fetch('http://localhost:5000/templates')
+        fetch('https://gs-mails-server.onrender.com/templates')
             .then(res => res.json())
             .then(data => {
                 setTemplates(data);
@@ -78,7 +80,7 @@ const Templates = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/templates/${id}`, {
+                fetch(`https://gs-mails-server.onrender.com/templates/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

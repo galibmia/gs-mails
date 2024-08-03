@@ -6,9 +6,11 @@ import { CiSearch } from "react-icons/ci";
 import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const Categories = () => {
 
+    useTitle('Categories');
     const [categories, setCategories] = useState([]);
     const [filteredCategories, setFilteredCategories] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -18,7 +20,7 @@ const Categories = () => {
     const [itemsPerPage, setItemsPerPage] = useState(10)
 
     useEffect(() => {
-        fetch('http://localhost:5000/categories')
+        fetch('https://gs-mails-server.onrender.com/categories')
             .then(res => res.json())
             .then(data => {
                 setCategories(data);
@@ -76,7 +78,7 @@ const Categories = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/categories/${id}`, {
+                fetch(`https://gs-mails-server.onrender.com/categories/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

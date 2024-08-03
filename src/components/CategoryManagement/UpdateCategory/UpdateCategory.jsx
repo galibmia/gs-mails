@@ -1,9 +1,11 @@
 import { Label, Select, TextInput } from 'flowbite-react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const UpdateCategory = () => {
 
+    useTitle('Update Category');
     const categoriesData = useLoaderData();
     const { _id,  categoryName, status } = categoriesData;
     const navigate = useNavigate('');
@@ -20,7 +22,7 @@ const UpdateCategory = () => {
             status
         }
 
-        fetch(`http://localhost:5000/categories/${_id}`, {
+        fetch(`https://gs-mails-server.onrender.com/categories/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

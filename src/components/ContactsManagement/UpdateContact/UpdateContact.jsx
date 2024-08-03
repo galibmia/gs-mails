@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const UpdateContact = () => {
+    useTitle('Update Category');
     const [countries, setCountries] = useState([]);
     const [groups, setGroups] = useState([]);
     const navigate = useNavigate('');
@@ -58,7 +60,7 @@ const UpdateContact = () => {
             status,
             about
         }
-        fetch(`http://localhost:5000/contacts/${_id}`, {
+        fetch(`https://gs-mails-server.onrender.com/contacts/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

@@ -25,7 +25,7 @@ const UpdateCampaigns = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:5000/groups')
+        fetch('https://gs-mails-server.onrender.com/groups')
             .then(res => res.json())
             .then(data => {
                 setGroups(data);
@@ -38,7 +38,7 @@ const UpdateCampaigns = () => {
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:5000/templates')
+        fetch('https://gs-mails-server.onrender.com/templates')
             .then(res => res.json())
             .then(data => {
                 setTemplates(data);
@@ -77,7 +77,7 @@ const UpdateCampaigns = () => {
             time,
             status
         }
-        fetch(`http://localhost:5000/campaigns/${_id}`, {
+        fetch(`https://gs-mails-server.onrender.com/campaigns/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useTitle from '../../../hooks/useTitle';
 
 const UpdateUser = () => {
+    useTitle('Update User');
     const [countries, setCountries] = useState([]);
     const navigate = useNavigate('');
     const loadedUser = useLoaderData();
@@ -48,7 +50,7 @@ const UpdateUser = () => {
             about
         }
 
-        fetch(`http://localhost:5000/users/${_id}`, {
+        fetch(`https://gs-mails-server.onrender.com/users/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
